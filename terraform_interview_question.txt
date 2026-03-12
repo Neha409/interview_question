@@ -1,5 +1,6 @@
 How to make secure terraform build
-
+Answer:-
+  
 
 how can modulizse terraform function, variable 
 
