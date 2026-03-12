@@ -1,0 +1,15 @@
+if jenkins is not coming up where to check the issue and how to resolve
+write the simple pipeline in jenkins
+where jenkins is hosted 
+if any python script is running on jenkins and memory leakage is there how to solve it 
+Python class
+python difference b/w list and tuple 
+python attribute
+python code
+In jenkins where to store the build logs 
+what is by default location in jenkins to store 
+Docker file write
+if first time docker is created and container is not comming up how to check 
+
+
+
