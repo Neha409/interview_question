@@ -1,10 +1,61 @@
-How to make secure terraform build
+Q1 How to make secure terraform build
 Answer:-
-  
 
-how can modulizse terraform function, variable 
+a.Store Terraform code in Git with PR reviews
+b.Use remote encrypted state backend
+c.Never store secrets in code – use Vault or Key Vault
+d.Implement IaC security scanning (tfsec, Checkov)
+e.Apply least privilege IAM roles
+f.Enable state locking
+g.Use CI/CD pipeline validation before apply
+    1. Checkout Code
+    2. Terraform Format
+    3. Terraform Validate
+    4. Security Scan (tfsec/checkov)
+    5. Terraform Plan
+    6. Manual Approval
+    7. Terraform Apply
+
+h.Implement policy-as-code with OPA or Sentinel
+
+Q2. How to Implement and when to use in pipeline policy-as-code with OPA or Sentinel checkov
+Answer: 
+
+We implement a secure Terraform pipeline using Jenkins or GitHub Actions where the pipeline 
+performs Terraform formatting, validation, security scanning using tfsec or Checkov,
+and generates a Terraform plan. The plan is reviewed and requires manual approval before apply.
+Terraform state is stored securely in a remote backend like Azure Storage with encryption and locking. 
+Secrets are managed using Azure Key Vault or Vault, and IAM roles follow the least privilege principle.
+
+Developer
+   │
+   │  Git Push
+   ▼
+Git Repository
+(:contentReference[oaicite:0]{index=0} / Bitbucket)
+   │
+   ▼
+CI/CD Pipeline
+(:contentReference[oaicite:1]{index=1} / :contentReference[oaicite:2]{index=2})
+   │
+   ├── Terraform Format Check
+   ├── Terraform Validate
+   ├── Security Scan (:contentReference[oaicite:3]{index=3} / :contentReference[oaicite:4]{index=4})
+   ├── Terraform Plan
+   ├── Manual Approval
+   └── Terraform Apply
+   │
+   ▼
+Cloud Infrastructure
+(:contentReference[oaicite:5]{index=5} / AWS / GCP)
+
+Terraform State
+Stored Securely in
+:contentReference[oaicite:6]{index=6} / S3 Backend
 
 
+
+how can modulizse terraform function, variable
 where to use count , for_each and in terraform
 
 
