@@ -1,0 +1,5 @@
+How to make secure terraform build
+how can modulizse terraform function, variable 
+where to use count , for_each and in terraform
+
+how to create cross region DB so that if any issue comes the db availablity will be there in terraform
