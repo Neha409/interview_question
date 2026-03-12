@@ -1,0 +1,192 @@
+Q1 How to make secure terraform build
+Answer:-
+
+a.Store Terraform code in Git with PR reviews
+b.Use remote encrypted state backend
+c.Never store secrets in code – use Vault or Key Vault
+d.Implement IaC security scanning (tfsec, Checkov)
+e.Apply least privilege IAM roles
+f.Enable state locking
+g.Use CI/CD pipeline validation before apply
+    1. Checkout Code
+    2. Terraform Format
+    3. Terraform Validate
+    4. Security Scan (tfsec/checkov)
+    5. Terraform Plan
+    6. Manual Approval
+    7. Terraform Apply
+
+h.Implement policy-as-code with OPA or Sentinel
+
+Q2. How to Implement and when to use in pipeline policy-as-code with OPA or Sentinel checkov
+Answer: 
+
+We implement a secure Terraform pipeline using Jenkins or GitHub Actions where the pipeline 
+performs Terraform formatting, validation, security scanning using tfsec or Checkov,
+and generates a Terraform plan. The plan is reviewed and requires manual approval before apply.
+Terraform state is stored securely in a remote backend like Azure Storage with encryption and locking. 
+Secrets are managed using Azure Key Vault or Vault, and IAM roles follow the least privilege principle.
+
+Developer
+   │
+   │  Git Push
+   ▼
+Git Repository
+(:contentReference[oaicite:0]{index=0} / Bitbucket)
+   │
+   ▼
+CI/CD Pipeline
+(:contentReference[oaicite:1]{index=1} / :contentReference[oaicite:2]{index=2})
+   │
+   ├── Terraform Format Check
+   ├── Terraform Validate
+   ├── Security Scan (:contentReference[oaicite:3]{index=3} / :contentReference[oaicite:4]{index=4})
+   ├── Terraform Plan
+   ├── Manual Approval
+   └── Terraform Apply
+   │
+   ▼
+Cloud Infrastructure
+(:contentReference[oaicite:5]{index=5} / AWS / GCP)
+
+Terraform State
+Stored Securely in
+:contentReference[oaicite:6]{index=6} / S3 Backend
+Note: - TO check the pipeline code visit jenkinsFile
+
+1. tfsec
+tfsec is a static security scanner specifically designed for Terraform code.
+It analyzes .tf files and detects security misconfigurations before infrastructure is deployed.
+
+****Example Problems tfsec Detects
+
+   Public S3 buckets
+   Open security groups (0.0.0.0/0)
+   Unencrypted storage
+   Public databases
+   Missing logging
+
+2. Checkov
+Checkov is a more advanced Infrastructure as Code security scanner.
+***It supports multiple IaC frameworks:
+   Terraform
+   Kubernetes
+   CloudFormation
+   Docker
+   Helm
+**Example
+  Run scan:
+   checkov -d .
+Checkov checks against hundreds of security policies.
+**Example checks:
+   Encryption enabled
+   Logging enabled
+   No public storage
+   IAM least privilege
+   Secure networking
+
+3. Open Policy Agent (OPA)
+Open Policy Agent is a policy engine used to enforce custom rules across infrastructure, Kubernetes, APIs, and CI/CD.
+Unlike tfsec and Checkov (which scan), OPA enforces policies before deployment.
+OPA uses Rego language.
+***Where OPA is Used
+Kubernetes admission controller
+CI/CD pipelines
+API authorization
+Terraform policy validation
+
+4. Sentinel
+HashiCorp Sentinel is a policy-as-code framework built by HashiCorp used mainly with Terraform Enterprise / Terraform Cloud.
+It enforces organizational security rules before Terraform applies infrastructure.
+Where Sentinel Runs
+Inside:
+Terraform Cloud
+Terraform Enterprise
+
+Git Push
+   │
+   ▼
+CI/CD Pipeline
+   │
+   ├── Terraform fmt
+   ├── Terraform validate
+   ├── tfsec scan
+   ├── Checkov scan
+   ├── Terraform plan
+   ├── OPA / Sentinel policy check
+   └── Terraform apply
+
+
+
+Q3 .how can modulizse terraform function, variable
+Answer:
+In Terraform we modularize infrastructure by creating reusable modules that 
+contain main.tf, variables.tf, and outputs.tf. Variables are used to parameterize 
+the module so it can be reused across multiple environments like dev, staging, 
+and production. The root module calls these child modules and passes values 
+through variables or tfvars files, making the infrastructure code reusable, 
+maintainable, and scalable.
+
+terraform-project
+│
+├── modules
+│   ├── network
+│   ├── compute
+│   └── database
+│
+├── environments
+│   ├── dev
+│   ├── staging
+│   └── prod
+
+
+
+Q4 . where to use count , for_each and in terraform
+Answer
+In Terraform, count is used to create multiple identical resources using an index value, 
+while for_each is used when each resource needs unique configurations based on a 
+list or map. In production environments we usually prefer for_each because 
+it provides better resource management and avoids index shifting issues.
+
+| Feature            | `count`             | `for_each`               |
+| ------------------ | ------------------- | ------------------------ |
+| Input              | Number              | List / Map               |
+| Resource reference | index               | key                      |
+| Flexibility        | Less                | More                     |
+| Use case           | identical resources | different configurations |
+
+Important Terraform Rule
+You cannot use both count and for_each together in the same resource.
+
+
+Q5 . how to create cross region DB so that if any issue comes the db availablity will be there in terraform
+Answer:
+
+                Primary Region
+                 (Region A)
+               ┌───────────────┐
+               │ Primary DB    │
+               │ Write + Read  │
+               └───────┬───────┘
+                       │
+                       │ Replication
+                       ▼
+                Secondary Region
+                 (Region B)
+               ┌───────────────┐
+               │ Replica DB    │
+               │ Read / Failover │
+               └───────────────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
