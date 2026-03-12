@@ -10,6 +10,7 @@ In jenkins where to store the build logs
 what is by default location in jenkins to store 
 Docker file write
 if first time docker is created and container is not comming up how to check 
-
+can you use Jenkins to build applications with multiple programming languages using different agents in different stages ?
+How can restart the jenkins
 
 
