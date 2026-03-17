@@ -179,7 +179,11 @@ Answer:
                └───────────────┘
 
 
+"How do you manage Terraform state for multiple environments using the same module?"
 
+Answer:
+
+We use reusable Terraform modules and separate environment folders like dev, stage, and prod. Each environment calls the same module but uses a different backend key in Azure Storage so each environment maintains an isolated Terraform state file.
 
 
 
