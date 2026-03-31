@@ -1,0 +1,39 @@
+Question- what is docker
+ans- Docker is a platform that allows developers to automate the deployment, 
+applications using containerization. It enables applications to be packaged with all their dependencies into a 
+standardized unit called a container, which can run consistently across different environments. 
+Docker provides tools for building, sharing, and running containers, 
+making it easier to develop and deploy applications in a consistent and efficient manner.
+
+Question- what is difference b/w Entrypoint and CMD in docker
+ans- The main difference between ENTRYPOINT and CMD in Docker is that ENTRYPOINT sets the default executable for 
+the container, while CMD provides default arguments to that executable. 
+ENTRYPOINT is used to define the main command that will run when the container starts, and it cannot be overridden at runtime.
+CMD, on the other hand, can be overridden by providing arguments when running the container.
+For example, if you have an ENTRYPOINT defined as "ENTRYPOINT ["python", "app.py"]" and a CMD defined as 
+"CMD ["--port", "8080"]", the container will run "python app.py --port 8080" by default. 
+However, if you run the container with "docker run myimage --port 9090", 
+it will override the CMD and run "python app.py --port 9090" instead.
+
+
+Question- how to create docker image
+ans- To create a Docker image, you need to follow these steps:
+1. Create a Dockerfile: This is a text file that contains instructions on how to build
+    your Docker image. It typically includes a base image, commands to install dependencies, 
+    and instructions to copy your application code into the image.
+2. Build the Docker image: Use the `docker build` command to create the image from your Dockerfile.
+    For example, you can run `docker build -t myimage:latest .` to build an image named "myimage" with the "latest" tag from the current directory.
+3. Run the Docker image: Once the image is built, 
+    you can run it using the `docker run` command. For example, `docker run  -d --name login -p 8080:80 myimage:latest`
+     will run the container and map port 8080 on your host to port 80 in the container.
+4. Optionally, you can push the Docker image to a container registry like Docker Hub or Azure Container Registry for easier distribution and deployment. 
+    Use the `docker push` command to upload your image to the registry after tagging it appropriately.
+
+
+Question- how to scan docker image for vulnerabilities
+ans- To scan a Docker image for vulnerabilities, you can use tools like Trivy, Clair, or Snyk. 
+These tools analyze the image layers and check for known vulnerabilities in the software packages included in the image. 
+For example, with Trivy, you can run the command `trivy image myimage:latest` to scan the "myimage" Docker image for vulnerabilities.
+The tool will provide a report of any vulnerabilities found, including their severity and recommendations for remediation.      
+Snyk also offers integration with Docker and can be used to continuously monitor your images for vulnerabilities and provide actionable insights to fix them.
+command- Snyk test --docker myimage:latest --file=Dockerfile
