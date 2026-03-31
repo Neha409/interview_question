@@ -188,6 +188,30 @@ We use reusable Terraform modules and separate environment folders like dev, sta
 
 
 
+Q- How to use custom module in terraform
+
+We use reusable Terraform modules and separate environment folders like dev,
+ stage, and prod. Each environment calls the same module but uses a different 
+ backend key in Azure Storage so each environment maintains an isolated Terraform state file.
+
+
+Ques- in-build function
+
+Most Used Terraform Functions (Important for Interviews)
+length()
+lookup()
+element()
+concat()
+join()
+split()
+upper()
+lower()
+file()
+timestamp()
+
+question - how to create overlay network in terraform
+
+question - how to identify the drift in terraform
 
 
 

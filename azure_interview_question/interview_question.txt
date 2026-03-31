@@ -1,0 +1,25 @@
+question- what is azure and what are the services provided by azure     
+ans- Azure is a cloud computing platform and service created by Microsoft. 
+It provides a wide range of cloud services, including those for 
+computing, analytics, storage, and networking. 
+Users can pick and choose from these services to develop and scale new applications 
+or run existing applications in the public cloud.  
+
+question - what is difference b/w l7 load balancer and l4 load balancer in azure or application gateway and load balancer in azure
+ans - L7 Load Balancer (Application Gateway) operates at the application layer (Layer 7) of the OSI model. 
+It can make routing decisions based on the content of the HTTP/HTTPS requests, such as URL paths, host headers,
+ and cookies. It is ideal for web applications and can provide features like SSL termination, session affinity, 
+ and Web Application Firewall (WAF) capabilities. 
+L4 Load Balancer (Azure Load Balancer) operates at the transport layer (Layer 4) of the OSI model.
+ It routes traffic based on IP address and port without inspecting the content of the traffic. 
+ It is suitable for non-HTTP workloads, such as TCP and UDP applications, and provides high performance and low latency.
+
+question - what is azure function and how it works
+ans - Azure Functions is a serverless compute service that allows you to run event-driven code without
+    having to manage infrastructure. It works by executing small pieces of code, called "functions," in response 
+    to various triggers, such as HTTP requests, timers, or messages from other Azure services. 
+    When a trigger event occurs, Azure Functions automatically allocates the necessary resources to 
+    execute the function and scales it based on demand.
+    for example, you can create a function that processes data from an Azure Storage Blob whenever 
+    a new blob is added, or you can create an HTTP-triggered function that responds to web requests.
+

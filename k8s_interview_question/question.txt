@@ -1,0 +1,121 @@
+ Question: What are system pods in AKS?
+
+Answer:
+
+System pods are Kubernetes infrastructure components like CoreDNS, kube-proxy, and metrics-server that run in the kube-system namespace and maintain cluster networking, DNS, and monitoring. In AKS, these pods typically run on system node pools to ensure cluster stability.
+
+
+System Node Pool (3 nodes)
+   ├── CoreDNS
+   ├── kube-proxy
+   ├── metrics-server
+   └── Azure storage drivers
+
+User Node Pool (5 nodes)
+   ├── frontend service
+   ├── backend API
+   ├── worker jobs
+   └── databases
+
+
+question - what is kubernates controller
+ans - kubernates controll is resposible for maintaining the desired state of the cluster by
+ monitoring the current state and making necessary adjustments. 
+ It ensures that the specified number of replicas are running, 
+ manages deployments, and handles scaling and updates to applications.
+
+Question- how many controller we have in kubernates
+ans - there are several controllers in Kubernetes, including:
+1. ReplicaSet Controller
+2. Deployment Controller
+3. StatefulSet Controller
+4. DaemonSet Controller
+5. Job Controller
+6. CronJob Controller
+7. Node Controller
+8. Service Controller
+9. Endpoint Controller
+10. Namespace Controller
+11. PersistentVolume Controller
+12. PersistentVolumeClaim Controller
+13. Horizontal Pod Autoscaler Controller
+14. Ingress Controller
+15. Network Policy Controller
+16. ResourceQuota Controller
+17. ServiceAccount Controller
+18. ConfigMap Controller
+19. Secret Controller
+20. Event Controller
+21. Garbage Collector Controller
+22. Certificate Controller
+23. Custom Resource Controller (for CRDs) 
+
+Question - how many services in k8s
+ans - there are several types of services in Kubernetes, including:
+1. ClusterIP: Exposes the service on a cluster-internal IP. This is the default type and is only accessible within the cluster.
+2. NodePort: Exposes the service on each node's IP at a static port. This allows external traffic to access the service using <NodeIP>:<NodePort>.
+3. LoadBalancer: Provisions an external load balancer (if supported by the cloud provider) and assigns a public IP to the service, allowing external traffic to access the service.
+4. ExternalName: Maps the service to an external DNS name, allowing access to services outside the cluster using a CNAME record.
+5. Headless Service: A service without a cluster IP, used for stateful applications where clients need to connect directly to individual pods.  
+
+question  what is CNAME record in DNS
+ans - A CNAME (Canonical Name) record in DNS is a type of resource record that maps an alias name to a canonical name. It allows you to point multiple domain names to the same IP address or another domain name.
+ For example, if you have a service running at "service.example
+
+question - if api-server is down how we can create depolyment 
+
+question - what is difference b/w replica set and deployment 
+
+ans-  Replica set is kubernates controller and it is maintain the desire set of copy should we 
+running on the cluster to maintain the auto healing process in kubernates, whereas deployement 
+is the combination od pod and replica set when deplyement is created it will create the replica set and 
+replica set will create the pod and maintain the desired state of pod in kubernates cluster
+
+question - what is Demaon set and statefull set 
+
+question - what is difference b/w stateful set and deployment
+
+question - what is event controller in k8s
+
+question - what is side car containers 
+
+question - how can achive the horizental auto scaling 
+
+question - what api gateway 
+
+question - what are ingress controller
+
+question - crash loop backoff in k8s
+
+question - how to controll the resource utilization in k8s pod 
+
+question - what is tolerace in k8s 
+
+question - what is node affinity and pod affinity in k8s
+
+question - what is difference b/w configmap and secret in k8s
+
+question - how to create secret in k8s
+
+question- how to get all resource in k8s cluster
+ ans- kubectl get all --all-namespaces
+      kubectl get all -A
+
+question - how to get all resource in k8s cluster with specific label
+ans- kubectl get all -l app=nginx --all-namespaces
+
+question how to get pod ip address in k8s cluster
+ans- kubectl get pod -o wide 
+
+question - how to get node ip address in k8s cluster
+ans- kubectl get nodes -o wide
+
+question - how to login to pod 
+ans- kubectl exec -it <pod-name> -- /bin/bash
+
+question - how to get login to node in k8s cluster
+ans- kubectl get nodes
+      kubectl describe node <node-name>
+      ssh <node-ip-address>
+
+
