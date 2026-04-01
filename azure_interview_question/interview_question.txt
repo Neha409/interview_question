@@ -23,3 +23,25 @@ ans - Azure Functions is a serverless compute service that allows you to run eve
     for example, you can create a function that processes data from an Azure Storage Blob whenever 
     a new blob is added, or you can create an HTTP-triggered function that responds to web requests.
 
+question- what is differnenc b/w azure function and logic app in azure
+ans- Azure Functions is a serverless compute service that allows you to run code in response to
+events, while Azure Logic Apps is a cloud service that helps you automate workflows and integrate applications, data, and services.
+Azure Functions is more focused on executing code and is ideal for scenarios where you need to run custom
+logic in response to events, such as processing data or handling HTTP requests.
+Azure Logic Apps, on the other hand, is designed for building complex workflows and integrating various services
+
+without writing code. It provides a visual designer and a wide range of connectors to easily create workflows that can automate tasks, integrate with other services, and orchestrate business processes. 
+In summary, Azure Functions is best for running code in response to events, while Azure Logic Apps is best for automating workflows and integrating services without writing code.
+
+
+Question - difffernce b/w NSG and ASG in azure
+ans- NSG (Network Security Group) is a security feature in Azure that allows you to
+control inbound and outbound traffic to and from Azure resources. It contains a list of security rules that allow or deny traffic based on source and destination IP addresses, ports, and protocols. NSGs are typically associated with subnets or individual network interfaces.
+ASG (Application Security Group) is a feature in Azure that allows you to group virtual machines and define security rules
+ based on those groups. ASGs provide a way to manage security rules for multiple virtual machines that share 
+ similar security requirements. You can create ASGs and then associate them with NSGs to apply security rules to 
+ the grouped virtual machines. ASGs are particularly useful for managing security in large environments 
+ where you have many virtual machines with similar security needs, as it allows you to simplify the management  
+ of security rules by grouping resources together.
+
+

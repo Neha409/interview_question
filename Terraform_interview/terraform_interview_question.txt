@@ -159,6 +159,32 @@ Important Terraform Rule
 You cannot use both count and for_each together in the same resource.
 
 
+question - how  to use for_each with map in terraform
+ans- To use for_each with a map in Terraform, you can define a resource that iterates over the map's key-value pairs.
+For example, if you have a map of server names and their corresponding IP addresses, you can create resources for each server like this:
+variable "servers" {
+  type = map(string)
+  default = {
+    server1 = "lks"  
+      server2 = "lks"   
+   }     
+}
+
+resource "aws_instance" "example" {
+  for_each = var.servers
+
+  ami           = "ami-12345678"
+  instance_type = "t2.micro"
+  tags = {
+    Name = each.key
+    IP   = each.value
+  }
+}
+In this example, the aws_instance resource will be created for each entry in the servers map, with the instance name set to the key and the IP address set to the value from the map.     
+
+
+
+
 Q5 . how to create cross region DB so that if any issue comes the db availablity will be there in terraform
 Answer:
 
@@ -183,7 +209,8 @@ Answer:
 
 Answer:
 
-We use reusable Terraform modules and separate environment folders like dev, stage, and prod. Each environment calls the same module but uses a different backend key in Azure Storage so each environment maintains an isolated Terraform state file.
+We use reusable Terraform modules and separate environment folders like dev, stage, and prod. Each environment calls the same module
+ but uses a different backend key in Azure Storage so each environment maintains an isolated Terraform state file.
 
 
 
@@ -209,10 +236,16 @@ lower()
 file()
 timestamp()
 
-question - how to create overlay network in terraform
+
 
 question - how to identify the drift in terraform
-
+ans - to identify drift in Terraform, you can use the `terraform plan` command. 
+This command compares the current state of your infrastructure with the desired state
+ defined in your Terraform configuration files. I
+   if there are any differences (drift) between the actual infrastructure and the configuration,
+    Terraform will show those changes in the output of the plan. You can also use `terraform show`
+     to inspect the current state and compare it with your configuration to identify any discrepancies.
+and you can also use refresh command to update the state file with the current infrastructure state before running plan to get accurate drift detection.
 
 
 

@@ -92,25 +92,61 @@ ans - A CNAME (Canonical Name) record in DNS is a type of resource record that m
 
 question- when these services are used in k8s cluster
 ans- ClusterIP is used for internal communication between services within the cluster. 
-NodePort is used when you want to expose a service to external traffic without using a load balancer.
-LoadBalancer is used when you want to expose a service to external traffic and your cloud provider supports automatic load balancer provisioning.
-ExternalName is used when you want to access an external service from within the cluster using a DNS name.
-Headless Service is used for stateful applications where clients need to connect directly to individual pods, 
-such as databases or stateful applications that require stable network identities.
+      NodePort is used when you want to expose a service to external traffic without using a load balancer.
+      LoadBalancer is used when you want to expose a service to external traffic and your cloud provider supports automatic load balancer provisioning.
+      ExternalName is used when you want to access an external service from within the cluster using a DNS name.
+      Headless Service is used for stateful applications where clients need to connect directly to individual pods, 
+      such as databases or stateful applications that require stable network identities.
 
 
 question - if api-server is down how we can create depolyment 
+ans - If the API server is down, you will not be able to create a deployment using kubectl 
+      or any other Kubernetes client, as the API server is responsible for processing and handling 
+      all requests to the cluster. 
+      2️⃣ Static Pods (Workaround)
+      Even if the API Server is down, kubelet can still create Static Pods directly from the node filesystem.
+
+      Steps:
+      SSH to the worker node
+      Place pod manifest inside:
+      /etc/kubernetes/manifests/
+      Kubelet will automatically create the pod from the manifest, allowing you to run a deployment without the API Server.
+      Note: But this creates only a Pod, not a Deployment. This is a workaround and not a recommended practice for production environments, as it bypasses the Kubernetes control plane and can lead to inconsistencies in cluster state.
 
 question - what is difference b/w replica set and deployment 
-
 ans-  Replica set is kubernates controller and it is maintain the desire set of copy should we 
 running on the cluster to maintain the auto healing process in kubernates, whereas deployement 
 is the combination od pod and replica set when deplyement is created it will create the replica set and 
 replica set will create the pod and maintain the desired state of pod in kubernates cluster
 
+
+question- what is stateful and stateless set in k8s 
+ans - StatelessSet is a Kubernetes controller that manages stateless applications.
+      It ensures that a specified number of replicas of a pod are running at any given time, 
+      but it does not maintain any state or identity for the pods. 
+     Each pod created by a StatelessSet is interchangeable and can be replaced without affecting the overall application. 
+     It is typically used for applications that do not require persistent storage or unique network identities, 
+     such as web servers or API services.
+     
+     Each pod created by a StatefulSet has a unique identity and is assigned a stable network identity, 
+     which allows it to maintain state across restarts and rescheduling. 
+     StatefulSet is typically used for applications that require persistent storage or unique network identities, 
+     such as databases or stateful applications that require stable network identities.
+
+
 question - what is Demaon set and statefull set 
+ans- DaemonSet is a Kubernetes controller that ensures that a copy of a specific pod runs on all or 
+     some nodes in the cluster. It is typically used for running system-level services, such as log collection or monitoring agents, on every node. 
+     When a new node is added to the cluster, the DaemonSet automatically creates a pod on that node to ensure that the service is running everywhere.
+     StatefulSet, on the other hand, is a Kubernetes controller that manages stateful applications.   
 
 question - what is difference b/w stateful set and deployment
+ans - The main difference between StatefulSet and Deployment in Kubernetes is that StatefulSet is designed for 
+      managing stateful applications,while Deployment is designed for managing stateless applications.
+
+
+
+
 
 question - what is event controller in k8s
 ans- The Event Controller in Kubernetes is responsible for monitoring and managing events that occur within the cluster.
@@ -120,10 +156,26 @@ ans- The Event Controller in Kubernetes is responsible for monitoring and managi
    It can be used for debugging, monitoring, and alerting purposes to ensure the smooth operation of the cluster.
 
 question - what is side car containers 
+ans- Sidecar containers are auxiliary containers that run alongside the main application container in a Kubernetes pod. 
+   They provide additional functionality or support to the main container, such as logging, monitoring, or proxying. 
+   Sidecar containers share the same network namespace and storage volumes as the main container, 
+   allowing them to interact closely with the main application. 
+   They are commonly used for tasks like log collection, service discovery, or handling communication between microservices.
+
 
 question - how can achive the horizental auto scaling 
+ans- Horizontal Pod Autoscaling (HPA) in Kubernetes can be achieved by using the `kubectl autoscale` command or by defining an HPA resource in a YAML file. 
+   HPA automatically scales the number of pod replicas based on observed CPU utilization or other custom metrics. 
+   For example, you can run `kubectl autoscale deployment my-deployment --min=1 --max=10 --cpu-percent=50` to create an HPA that scales the "my-deployment" 
+   deployment between 1 and 10 replicas based on CPU usage. 
+   Alternatively, you can define an HPA resource in a YAML file and apply it to the cluster using `kubectl apply -f hpa.yaml`.
 
 question - what api gateway 
+ans- An API Gateway is a server that acts as an intermediary between clients and backend services. 
+   It provides a single entry point for all client requests and can perform various functions such as request routing, 
+   authentication, rate limiting, and load balancing. 
+   In the context of Kubernetes, an API Gateway can be implemented using an Ingress controller or a service mesh to manage and route traffic to different services within the cluster.
+   It helps in abstracting the underlying services and provides a unified interface for clients to interact with the applications running in the Kubernetes cluster.
 
 question - what are ingress controller
 ans- Ingress controllers are responsible for managing and routing external traffic to services within a Kubernetes cluster.
@@ -136,15 +188,77 @@ ans- Ingress controllers are responsible for managing and routing external traff
    It is providing Enterprise level features like SSL termination, load balancing, and authentication for incoming traffic to the cluster 
    which is not provided by the default Kubernetes services like ClusterIP, NodePort, or LoadBalancer.
 
+
+question - what is difference b/w ingress controller and api gateway
+ans- The main difference between an Ingress controller and an API Gateway is that an Ingress 
+     controller is a Kubernetes-specific component that manages and routes external traffic to services within a Kubernetes cluster, \
+     while an API Gateway is a more general concept that can be implemented in various environments to provide a single entry point 
+     for client requests and manage interactions with backend services. 
+   Ingress controllers are focused on routing HTTP and HTTPS traffic based on rules defined in Ingress resources, 
+   while API Gateways can provide additional functionalities such as authentication, rate limiting, and load balancing across different types of protocols and services.
+
 question - crash loop backoff in k8s
+ans- CrashLoopBackOff is a status in Kubernetes that indicates a pod is repeatedly crashing and restarting. 
+   It occurs when a container in the pod fails to start successfully, and Kubernetes attempts to restart it, but it continues to fail. 
+   The "BackOff" part of the status indicates that Kubernetes is applying an exponential backoff strategy to avoid overwhelming the system with constant restarts. 
+   To troubleshoot a CrashLoopBackOff, you can check the logs of the affected pod using `kubectl logs <pod-name>` to identify the cause of the failure and take appropriate actions to resolve it.
+
+   main reasons for CrashLoopBackOff include:
+   1. Application errors: The application running in the container may have bugs or issues that cause it to crash.
+   2. Resource constraints: The container may be running out of memory or CPU, leading to crashes.
+   3. Misconfiguration: Incorrect environment variables, command-line arguments, or other configuration issues can cause the container to fail.
+   4. Dependency failures: If the container relies on external services or resources that are unavailable, it may crash.
+   5. Health check failures: If the liveness or readiness probes are misconfigured, they may cause the container to be marked as unhealthy and restarted.   
+
+
+question - what is liveness probe and readiness probe in k8s
+ans- Liveness probe is used to determine if a container is still healthy and functioning properly.
+     If the liveness probe fails, Kubernetes will restart the container to try to recover it.
+     Readiness probe is used to determine if a container is ready to accept traffic. 
+     It checks the health of the application and only routes traffic to the container when it is ready. 
+     Both probes are essential for ensuring the reliability and availability of applications running in Kubernetes.
 
 question - how to controll the resource utilization in k8s pod 
+ans- To control resource utilization in a Kubernetes pod, you can specify resource requests and limits in the pod's YAML configuration. 
+   Resource requests define the minimum amount of CPU and memory that a container needs to run, while resource limits set the maximum amount of CPU and memory that a container can use. 
+   For example, you can add the following to your pod specification:
+   ```
+   resources:
+     requests:
+       cpu: "500m"
+       memory: "256Mi"
+     limits:
+       cpu: "1"
+       memory: "512Mi"
+   ```
+   This configuration ensures that the container will request 500 millicores of CPU and 256 MiB of memory, and it will not be allowed to use more than 1 CPU core and 512 MiB of memory. 
+   By setting appropriate resource requests and limits, you can help ensure that your applications run efficiently and prevent resource contention in the cluster.
 
+question - when to use resouce ResourceQuota in k8s
+ans- ResourceQuota is used in Kubernetes to limit the amount of resources that can be consumed by a namespace. 
+      It is typically used in multi-tenant environments or when you want to enforce resource limits   on a specific namespace to prevent any single team or application from consuming excessive resources and impacting the overall performance of the cluster.
+      By defining a ResourceQuota, you can set limits on CPU, memory, storage, and other resources for all the pods, services, and other resources created within that namespace. 
+      This helps in managing resource allocation and ensuring fair usage across different teams or applications running in the same cluster.
+ 
 question - what is tolerace in k8s 
+ans- Toleration in Kubernetes is a mechanism that allows pods to be scheduled on nodes with specific taints. 
+   Taints are applied to nodes to repel certain pods, while tolerations are applied to pods to allow them to tolerate those taints 
+   and be scheduled on the nodes. 
+   This is useful for controlling which pods can run on which nodes based on specific conditions or requirements, 
+   such as running certain workloads on dedicated hardware or isolating critical applications from less important ones.
+   for example, if a node has a taint that repels all pods except those with a specific toleration,
+    only pods with that toleration will be scheduled on that node.
 
 question - what is node affinity and pod affinity in k8s
+ans- Node affinity and pod affinity are scheduling constraints in Kubernetes that allow you to control where pods are scheduled based on certain criteria. 
+   Node affinity allows you to specify rules for scheduling pods on specific nodes based on node labels,
+    while pod affinity allows you to specify rules for scheduling pods based on the labels of other pods. 
+   Both node affinity and pod affinity can be used to ensure that certain workloads are scheduled together or apart based on their requirements or characteristics.
 
 question - what is difference b/w configmap and secret in k8s
+ans - ConfigMap is used to store non-sensitive configuration data in key-value pairs, while Secret is used to store sensitive information such as passwords, API keys, and certificates. 
+   ConfigMaps are typically used for application configuration, while Secrets are used for sensitive data that needs to be protected. 
+   Both ConfigMaps and Secrets can be mounted as volumes or exposed as environment variables in pods, but Secrets are encoded and stored securely to prevent unauthorized access.
 
 question - how to create secret in k8s
 
@@ -169,4 +283,9 @@ ans- kubectl get nodes
       kubectl describe node <node-name>
       ssh <node-ip-address>
 
-
+question- what is readyness probe and liveness probe in k8s
+ans- Readiness probe is used to determine if a container is ready to accept traffic. 
+     It checks the health of the application and only routes traffic to the container when it is ready. 
+     Liveness probe, on the other hand, is used to determine if a container is still healthy and functioning properly. 
+     If the liveness probe fails, Kubernetes will restart the container to try to recover it. 
+     Both probes are essential for ensuring the reliability and availability of applications running in Kubernetes.
