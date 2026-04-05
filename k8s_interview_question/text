@@ -1,0 +1,5 @@
+docker run -it --rm -p 3005:3000 princemokut/users:v1.0
+
+docker run -it --rm -p 3000:3005 princemokut/users:v1.0
+
+docker run -it --rm 3005:3000 princemokut/users:v1.0
