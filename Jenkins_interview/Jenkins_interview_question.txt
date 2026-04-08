@@ -1,0 +1,124 @@
+Q1 if jenkins is not coming up where to check the issue and how to resolve
+
+Answer:
+First I check the Jenkins service status using systemctl. If it is not running, I check the Jenkins logs in /var/log/jenkins or journalctl to identify the error. Then I verify Java installation, check whether port 8080 is available, and confirm sufficient disk space and memory. I also check firewall rules and plugin failures. Based on the logs, I restart the service or fix the configuration issue.
+1. Check Jenkins Service Status
+    sudo systemctl status jenkins
+2. Check Jenkins Logs
+    sudo journalctl -u jenkins
+    or
+    /var/log/jenkins/jenkins.log
+
+3. Check Java Installation
+    java -version
+
+4. Check Jenkins Port (8080)
+    netstat -tulnp | grep 8080
+
+5. Check Disk Space
+    df -h
+
+6. Check Memory (RAM)
+    free -m
+
+7. Check Firewall / Security Groups
+    curl http://localhost:8080
+
+8. Check Plugin Issues
+    Remove problematic plugin from:
+    /var/lib/jenkins/plugins
+    Then restart Jenkins.
+9. Check Jenkins Home Directory
+    Ensure permissions are correct.
+    ls -ld /var/lib/jenkins
+    Fix permissions:
+    sudo chown -R jenkins:jenkins 
+    
+question- what is default location of jenkins 
+Answer: The default location of Jenkins is typically /var/lib/jenkins on Linux systems. 
+This directory contains the Jenkins home directory, which includes configuration files, plugins, and job data.
+ The Jenkins logs are usually located in /var/log/jenkins. However, the exact location may vary based on the installation
+  method and operating system used.
+
+
+
+
+Q2. if any python script is running on jenkins and memory leakage is there how to solve it
+Answer:
+
+First I monitor the Jenkins node to confirm memory consumption using tools like top or htop. Then 
+I check the Jenkins job logs and identify the Python process causing the issue. I analyze the script using tools 
+like tracemalloc in python code to detect memory leaks. After identifying the problem, 
+I fix the code, optimize memory usage, and apply resource limits on Jenkins agents or containers to prevent the issue in the future.
+
+
+
+
+Question- can you use Jenkins to build applications with multiple programming languages using different agents in different stages ?
+Answer: Yes, Jenkins supports building applications with multiple programming languages by utilizing different agents in various stages 
+of the pipeline. Each agent can be configured with the necessary tools and environments for a specific programming language, 
+allowing seamless integration of diverse technologies within a single CI/CD workflow. 
+For example, you can have one stage that uses a Python agent to run tests and another stage 
+that uses a Node.js agent to build a frontend application. Jenkins' flexibility in 
+managing multiple agents enables efficient handling of complex projects with varied technology stacks.
+
+
+
+Question - can we use docker agent in jenkins to build and deploy applications
+Answer: Yes, Jenkins can use Docker agents to build and deploy applications. By configuring a Docker agent in Jenkins, 
+    you can run your build and deployment processes inside Docker containers. This allows for consistent and isolated environments,
+     ensuring that your builds are reproducible and free from conflicts with the host system.   
+To set up a Docker agent in Jenkins, you can use the Docker plugin, which allows you to define Docker images as agents for your Jenkins pipeline.
+You can specify the Docker image to use for the agent, and Jenkins will automatically pull the image and run the build steps inside a container based on that image. 
+This is particularly useful for building applications that require specific dependencies or runtime environments, as you can create custom Docker images tailored to your application's needs 
+and use them as Jenkins agents for your build and deployment processes.
+
+
+Question - how to store the build logs in jenkins
+Answer: Jenkins automatically stores build logs for each job in the Jenkins home directory, typically located at
+/var/lib/jenkins/jobs/<job_name>/builds/<build_number>/log. Each build has its own log file that contains the output of the build process, 
+including any errors or warnings. You can access these logs through the Jenkins web interface by navigating to the specific job and build,
+or you can directly access the log files on the server where Jenkins is installed. 
+Additionally, Jenkins provides options to archive logs or send them to external logging systems for long-term storage and analysis. 
+
+
+question- what is difference b/w SCM poll and build trigger in jenkins
+Answer: SCM Polling and Build Trigger are two different methods to initiate a build in Jenkins.
+1. SCM Polling: This method involves Jenkins periodically checking the Source Code Management (SCM) repository for changes. 
+                If Jenkins detects any changes in the codebase, it triggers a build.
+2. Build Trigger: This method allows you to set up specific conditions or events that will trigger a build.
+                For example, you can configure a build trigger to start a build when a pull request is created, when a specific branch is updated, or when a scheduled time is reached. 
+                Build triggers provide more flexibility and control over when builds are initiated, while SCM polling is a more passive approach that relies on Jenkins to check for changes at regular intervals.
+
+
+Question - what is declarative pipeline in jenkins
+Answer: A Declarative Pipeline in Jenkins is a simplified and more structured way to define Jenkins pipelines
+using a specific syntax. It provides a more readable and maintainable format for defining the stages, steps, and conditions of a pipeline.
+Declarative Pipelines use a block structure with predefined keywords such as `pipeline`, `agent`, `stages`, and `steps` to organize the pipeline code. 
+This approach allows developers to focus on the logic of the pipeline rather than the underlying Groovy code,making it easier to create and 
+manage complex CI/CD workflows. Declarative Pipelines also support features like parallel execution, post-build actions, and environment variables,
+ making it a powerful tool for automating software delivery processes in Jenkins.
+
+
+ Question - what is scripted pipeline in jenkins
+Answer: A Scripted Pipeline in Jenkins is a more flexible and powerful way to define Jenkins pipelines
+using Groovy code. Unlike Declarative Pipelines, Scripted Pipelines allow you to write custom logic and control flow using standard programming constructs.
+Scripted Pipelines provide greater freedom in how you structure your pipeline, but they require a deeper understanding of Groovy and Jenkins internals. 
+In a Scripted Pipeline, you can use loops, conditionals, and other programming features to create complex workflows that may not fit well within the 
+constraints of a Declarative Pipeline. Scripted Pipelines are often used for advanced use cases where the pipeline logic needs to be 
+highly customized or when integrating with external systems that require more complex interactions. 
+However, they can be less readable and harder to maintain compared to Declarative Pipelines, especially for those who are not familiar 
+with Groovy programming.
+
+question - what is library in jenkins
+Answer: A Library in Jenkins is a reusable collection of code, functions, and resources that can be shared across multiple 
+        Jenkins pipelines. Libraries allow you to encapsulate common logic, such as utility functions or shared steps, 
+        and make them available to all your pipelines without having to duplicate code.     
+
+example, you can create a library that contains functions for interacting with a specific API, 
+            and then use those functions in any pipeline that needs to interact with that API.
+Libraries can be stored in a version control system, such as Git, and can be easily updated and maintained.
+To use a library in Jenkins, you need to define it in the Jenkins configuration and then import it in your pipeline script. 
+This promotes code reuse, reduces duplication, and helps maintain consistency across your 
+pipelines, making it easier to manage and scale your Jenkins environment.
+

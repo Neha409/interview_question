@@ -71,7 +71,7 @@ ans - there are several controllers in Kubernetes, including:
 22. Certificate Controller
 23. Custom Resource Controller (for CRDs) 
 
-uestion- what is service in k8s
+question- what is service in k8s
 ans - A service in Kubernetes is an abstraction that defines a logical set of pods and a policy
 by which to access them. It provides a stable IP address and DNS name for a set of pods, allowing for load balancing 
 and service discovery within the cluster. Services enable communication between different components of 
@@ -87,7 +87,8 @@ ans - there are several types of services in Kubernetes, including:
 5. Headless Service: A service without a cluster IP, used for stateful applications where clients need to connect directly to individual pods.  
 
 question  what is CNAME record in DNS
-ans - A CNAME (Canonical Name) record in DNS is a type of resource record that maps an alias name to a canonical name. It allows you to point multiple domain names to the same IP address or another domain name.
+ans - A CNAME (Canonical Name) record in DNS is a type of resource record that maps an alias name to a canonical name. It allows you to point 
+multiple domain names to the same IP address or another domain name.
  For example, if you have a service running at "service.example
 
 question- when these services are used in k8s cluster
@@ -289,3 +290,42 @@ ans- Readiness probe is used to determine if a container is ready to accept traf
      Liveness probe, on the other hand, is used to determine if a container is still healthy and functioning properly. 
      If the liveness probe fails, Kubernetes will restart the container to try to recover it. 
      Both probes are essential for ensuring the reliability and availability of applications running in Kubernetes.
+
+
+
+questing- in deployment how can get the images which is there azure container registry
+ans- To get the images from Azure Container Registry (ACR) in a Kubernetes deployment, you can follow these steps:
+1. Create a Kubernetes secret to store the ACR credentials:
+```bash
+kubectl create secret docker-registry acr-secret --docker-server=<ACR_NAME>.azurecry.io --docker-username=<ACR_USERNAME> 
+--docker-password=<ACR_PASSWORD> --docker-email=<EMAIL_ADDRESS>
+```
+2. In your deployment YAML file, specify the image from ACR and reference the secret for authentication:
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: my-deployment  
+spec:
+   replicas: 3
+   selector:
+       matchLabels:
+           app: my-app
+   template:
+       metadata:
+           labels:     
+               app: my-app
+         spec:
+           containers:
+           - name: my-container
+             image: <ACR_NAME>.azurecr.io/my-image:latest
+           imagePullSecrets:
+           - name: acr-secret
+```
+3. Apply the deployment to your Kubernetes cluster:
+```bashkubectl apply -f deployment.yaml
+```
+This will allow your Kubernetes deployment to pull the specified image from Azure Container Registry using the provided credentials stored in the secret.
+
+
+

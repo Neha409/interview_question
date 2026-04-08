@@ -36,7 +36,9 @@ In summary, Azure Functions is best for running code in response to events, whil
 
 Question - difffernce b/w NSG and ASG in azure
 ans- NSG (Network Security Group) is a security feature in Azure that allows you to
-control inbound and outbound traffic to and from Azure resources. It contains a list of security rules that allow or deny traffic based on source and destination IP addresses, ports, and protocols. NSGs are typically associated with subnets or individual network interfaces.
+control inbound and outbound traffic to and from Azure resources. It contains a list of security rules that allow or deny 
+traffic based on source and destination IP addresses, ports, and protocols. NSGs are typically associated with subnets or 
+ individual network interfaces.
 ASG (Application Security Group) is a feature in Azure that allows you to group virtual machines and define security rules
  based on those groups. ASGs provide a way to manage security rules for multiple virtual machines that share 
  similar security requirements. You can create ASGs and then associate them with NSGs to apply security rules to 
@@ -45,3 +47,82 @@ ASG (Application Security Group) is a feature in Azure that allows you to group 
  of security rules by grouping resources together.
 
 
+Question- what is azure function and how it works
+    ans- Azure Functions is a serverless compute service that allows you to run event-driven code without
+    having to manage infrastructure. It works by executing small pieces of code, called "functions," in response
+    to various triggers, such as HTTP requests, timers, or messages from other Azure services. 
+    When a trigger event occurs, Azure Functions automatically allocates the necessary resources to execute 
+    the function and scales it based on demand.
+    For example, you can create a function that processes data from an Azure Storage Blob whenever a new blob is added, 
+    or you can create an HTTP-triggered function that responds to web requests. 
+    Azure Functions supports multiple programming languages, including C#, JavaScript, Python, and PowerShell, allowing developers to choose the language that best suits their needs.
+    Overall, Azure Functions provides a flexible and scalable way to run code in response to events without 
+    the need to manage infrastructure, making it an ideal choice for building serverless applications 
+    and automating tasks in the cloud.
+
+Question- what is app service in azure
+    ans- Azure App Service is a fully managed platform for building, deploying, and scaling web applications
+    and APIs. It provides a range of features and capabilities that make it easy for developers to create and manage 
+    web applications in the cloud. With Azure App Service, you can quickly create web applications using various 
+    programming languages, including .NET, Java, Node.js, Python, and PHP. It supports both Windows and Linux environments, 
+    allowing you to choose the platform that best suits your needs.
+    Azure App Service offers built-in features such as auto-scaling, load balancing, and high availability, which help ensure that your 
+    applications can handle varying levels of traffic and remain responsive. 
+    It also provides integration with other Azure services, such as Azure SQL Database, Azure Storage, 
+    and Azure Active Directory, allowing you to easily connect your applications to data and authentication services. 
+    Additionally, Azure App Service provides a range of deployment options, including continuous integration and deployment (CI/CD) pipelines, which enable you to automate the deployment of your applications and ensure that they are always up to date.
+
+
+question- what is vnet peering in azure
+    ans- VNet peering in Azure is a networking feature that allows you to connect two virtual networks (VNets) in the same Azure region. 
+    This connection enables resources in the peered VNets to communicate with each other as if they were part of the same network. 
+    VNet peering provides low-latency, high-bandwidth connectivity between the peered VNets, allowing for seamless communication and data transfer. 
+    It is commonly used to enable communication between different applications or services that are deployed in separate VNets, while still maintaining isolation and security between them. 
+    VNet peering can be established using either the Azure portal, Azure PowerShell, or Azure CLI, and it does not require any additional gateways or VPNs to set up.
+    3 types of vnet peering in azure
+1. Global VNet Peering: This allows you to peer virtual networks across different Azure regions
+2. VNet Peering within the same region: This allows you to peer virtual networks within the same Azure region
+3. VNet Peering with Azure Virtual WAN: This allows you to peer virtual networks with Azure Virtual WAN, which is a networking service that provides optimized and automated branch connectivity to Azure.      
+
+1️⃣ What is ExpressRoute?
+Azure ExpressRoute is a private dedicated connection between your on-premises network and Microsoft Azure, bypassing the public internet.
+
+
+
+question- what is managed identity in azure
+    ans- Managed Identity in Azure is a feature that provides an automatically managed identity in Microsoft Entra ID (formerly Azure AD) 
+    for applications 
+    to use when connecting to resources that support Azure AD authentication. 
+    Managed Indentity azure rotates the credentials for you, eliminating the need for developers to manage and
+    secure credentials in their code.   
+
+question- what service princple in azure
+    ans- A Service Principal in Azure is an identity created for use with applications, hosted services, and 
+    automated tools to access Azure resources. 
+    It is a security identity that allows applications to authenticate and access resources in Azure without 
+    the need for user credentials.
+    Service Principals are commonly used in scenarios such as automation, 
+    continuous integration/continuous deployment (CI/CD) pipelines, and when applications need to access Azure resources 
+    on behalf of a user or another application. 
+    They can be assigned specific roles and permissions to control access to resources, ensuring that applications have 
+    the necessary permissions while adhering to the principle of least privilege. and user need to rotate the credentials of 
+    service principal manually.
+
+
+    
+7️⃣ Simple Interview Answer
+
+If a Service Principal has Contributor access, it means:
+
+The Service Principal can create, update, and delete Azure resources but cannot grant or modify access permissions for other users.
+
+✅ DevOps Interview Follow-up Question (very common):
+
+Q: Why do we use Service Principal instead of user credentials in CI/CD?
+
+Answer:
+
+Non-interactive authentication
+Secure automation
+Role-based access control
+Used by tools like Terraform, Azure DevOps, GitHub Actions

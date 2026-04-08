@@ -8,7 +8,8 @@ making it easier to develop and deploy applications in a consistent and efficien
 Question- what is difference b/w Entrypoint and CMD in docker
 ans- The main difference between ENTRYPOINT and CMD in Docker is that ENTRYPOINT sets the default executable for 
 the container, while CMD provides default arguments to that executable. 
-ENTRYPOINT is used to define the main command that will run when the container starts, and it cannot be overridden at runtime.
+ENTRYPOINT is used to define the main command that will run when the container starts, and it cannot be overridden at 
+runtime.
 CMD, on the other hand, can be overridden by providing arguments when running the container.
 For example, if you have an ENTRYPOINT defined as "ENTRYPOINT ["python", "app.py"]" and a CMD defined as 
 "CMD ["--port", "8080"]", the container will run "python app.py --port 8080" by default. 
@@ -37,3 +38,116 @@ For example, with Trivy, you can run the command `trivy image myimage:latest` to
 The tool will provide a report of any vulnerabilities found, including their severity and recommendations for remediation.      
 Snyk also offers integration with Docker and can be used to continuously monitor your images for vulnerabilities and provide actionable insights to fix them.
 command- Snyk test --docker myimage:latest --file=Dockerfile
+
+
+
+question- how can create network in docker
+ans- To create a network in Docker, you can use the `docker network create` command
+For example, to create a bridge network named "mynetwork", you can run:
+```docker network create mynetwork
+```
+This will create a new network that you can use to connect your Docker containers.      
+
+
+Question - how can setup few containers which is not communicate with other docker container to the network
+Answer- To set up containers that do not communicate with other Docker containers, you can create a custom network 
+        and specify the `--internal` flag when creating the network.    
+    For example, you can run the following command to create an internal network named "isolated_network":
+    ```docker network create --internal isolated_network
+    ```
+    This will create a network that is isolated from other networks, and containers connected to this network will not be able to 
+    communicate with containers on other networks. You can then run your containers and connect them to the "isolated_network" using the `--network` flag
+    when running the container. For example:
+    ```docker run -d --name mycontainer --network isolated_network myimage:latest
+    2️⃣ docker network create --internal isolated_network
+
+    Command:
+
+        docker network create --internal isolated_network
+
+
+    What it does:
+
+    Creates a completely isolated network
+    Containers cannot access the internet
+    Containers can only communicate with other containers in the same network
+
+    Example:
+
+    Container A ↔ Container B
+      ❌ No Internet
+
+
+
+Question - how can setup few container which is communicate with other docker container to the network
+Answer- To set up containers that can communicate with other Docker containers, you can create a custom network without the 
+`--internal` flag. For example, you can run the following command to create a bridge network named "shared_network":
+```docker network create shared_network
+```
+This will create a network that allows communication between containers connected to it. You can then run your containers and connect them to the "shared_network" using the `--network` flag when running the container. For example:
+```docker run -d --name mycontainer --network shared_network myimage:latest
+```
+This will allow the container "mycontainer" to communicate with other containers that are also connected to the "shared_network".
+ You can use container names or IP addresses to enable communication between the containers on the same network.
+What it does:
+
+Creates a normal bridge network
+Containers in this network can access the internet
+Containers can communicate with each other
+Containers can reach external networks
+
+Example:
+
+Container A ↔ Container B
+        │
+        │
+     Internet
+
+
+
+Question- How many types of docker network are there
+Answer- There are several types of Docker networks, including:
+1. Bridge Network: This is the default network driver in Docker. It allows containers to communicate
+    with each other on the same host using a private IP address. Containers on a bridge network can also access the internet.
+2. Host Network: This network mode removes network isolation between the container and the host machine. The container shares the host's network namespace.
+3. None Network: This network mode disables all networking for the container. The container has no access to the network.
+4. Overlay Network: This network driver allows containers running on different Docker hosts to communicate with each other. It is commonly used in Docker Swarm and Kubernetes environments.
+5. Macvlan Network: This network driver allows you to assign a MAC address to a
+    container, making it appear as a physical device on the network. This is useful for scenarios where you want to 
+    integrate containers into an existing network infrastructure.
+6. Custom Network: Docker also allows you to create custom networks with specific configurations, such as using different 
+    drivers or setting up specific IP address ranges. This gives you more control over how your containers communicate with 
+    each other and with the outside world.
+
+
+
+Question - if first time docker is created and container is not comming up how to check 
+Answer- If a Docker container is not coming up for the first time, you can check the following:
+1. Check Container Logs: Use the command `docker logs <container_name>` to view the logs of the container. 
+    This can provide insights into any errors or issues that may be preventing the container
+    from starting.
+2. Check Docker Events: Use the command `docker events` to monitor real-time events related to Docker. 
+    This can help you identify any events that may be causing the container to fail.
+3. Check Docker Daemon Logs: The Docker daemon logs can provide information about any issues with the Docker service itself. 
+    On Linux, you can check the logs using `journalctl -u docker` or by looking at the log files in `/var/log/docker`.
+4. Check Container Configuration: Ensure that the container is configured correctly, including the image, environment variables, 
+    and any required volumes or network settings.
+5. Check Resource Availability: Ensure that there are sufficient resources (CPU, memory, disk space) available for the container to 
+   start and run properly.
+
+
+
+question- what is the architectural components of docker
+ans- The architectural components of Docker include:
+1. Docker Engine: This is the core component of Docker that enables the building, running, and managing of Docker containers. 
+    It consists of a server (the Docker daemon) and a client (
+    the Docker CLI) that communicate with each other to perform various operations.
+2. Docker Images: These are read-only templates that contain the instructions for creating a Docker container
+    and the necessary dependencies. Images are built from a Dockerfile and can be stored in a registry for easy distribution.
+3. Docker Containers: These are the runnable instances of Docker images. Containers are isolated from each other and the host system, allowing for consistent and reproducible environments.
+4. Docker Registries: These are repositories where Docker images are stored and shared. The most popular registry is Docker Hub, but there are also private registries that organizations can use to store their images securely.
+5. Docker Networks: These allow containers to communicate with each other and with the outside world. Docker provides different network drivers to manage container networking, such as bridge, host, and overlay networks.
+6. Docker Volumes: These are used to persist data generated by and used by Docker containers. Volumes allow data to be stored outside of the container's filesystem, making it easier to manage and share data between containers and   the host system.
+7. Docker Compose: This is a tool for defining and running multi-container Docker applications. It allows you to use a YAML file to configure your application's services, networks, and volumes, making it easier to manage complex applications with multiple containers.         
+
+   

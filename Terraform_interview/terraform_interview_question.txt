@@ -248,6 +248,14 @@ This command compares the current state of your infrastructure with the desired 
 and you can also use refresh command to update the state file with the current infrastructure state before running plan to get accurate drift detection.
 
 
-
+Question - If in azure we have few resouces are created manually than how can migrate those resources to terraform
+Answer - To migrate manually created Azure resources to Terraform, you can use the `terraform import` command. 
+         This command allows you to import existing resources into your Terraform state file.   
+You will need to write the corresponding Terraform configuration for the resource you want to import, and then use the import command with the resource type and ID.
+For example, if you have an Azure Resource Group that was created manually, you would first write a Terraform configuration for that resource group, and then run:
+```terraform import azurerm_resource_group.example /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}```
+This will import the existing resource group into your Terraform state, allowing you to manage it
+with Terraform going forward. You will need to repeat this process for each resource you want to migrate, 
+ensuring that your Terraform configuration accurately reflects the existing infrastructure.
 
 
