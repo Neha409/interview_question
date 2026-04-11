@@ -30,8 +30,10 @@ Azure Functions is more focused on executing code and is ideal for scenarios whe
 logic in response to events, such as processing data or handling HTTP requests.
 Azure Logic Apps, on the other hand, is designed for building complex workflows and integrating various services
 
-without writing code. It provides a visual designer and a wide range of connectors to easily create workflows that can automate tasks, integrate with other services, and orchestrate business processes. 
-In summary, Azure Functions is best for running code in response to events, while Azure Logic Apps is best for automating workflows and integrating services without writing code.
+without writing code. It provides a visual designer and a wide range of connectors to easily create workflows that can automate tasks, 
+integrate with other services, and orchestrate business processes. 
+In summary, Azure Functions is best for running code in response to events, while Azure Logic Apps is best for automating workflows 
+and integrating services without writing code.
 
 
 Question - difffernce b/w NSG and ASG in azure
@@ -109,7 +111,7 @@ question- what service princple in azure
     service principal manually.
 
 
-    
+
 7️⃣ Simple Interview Answer
 
 If a Service Principal has Contributor access, it means:
@@ -126,3 +128,15 @@ Non-interactive authentication
 Secure automation
 Role-based access control
 Used by tools like Terraform, Azure DevOps, GitHub Actions
+
+
+Question how to can migrated on-premises resources to auzre 
+    ans- To migrate on-premises resources to Azure, you can use the Azure Migrate service, which provides a centralized hub for discovering,
+     assessing, and migrating on-premises applications and workloads to Azure. 
+    The migration process typically involves the following steps:   
+1. Discovery: Use Azure Migrate to discover and inventory your on-premises resources, including servers, applications, and databases.
+2. Assessment: Assess the readiness of your on-premises resources for migration to Azure, including
+    performance, compatibility, and cost analysis.
+3. Migration: Use Azure Migrate to migrate your on-premises resources to Azure, which
+    can be done using various migration tools and services, such as Azure Site Recovery for virtual machines, 
+    Azure Database Migration Service for databases, and Azure App Service Migration Assistant for web applications.

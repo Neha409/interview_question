@@ -1,0 +1,6 @@
+Question - how can debug the bash script if it is not working as expected
+Answer: You can use the `set -x` option at the beginning of your script to enable debug mode, 
+        which will print each command before executing it. 
+        Alternatively, you can use `echo` statements to print variable values and execution points for troubleshooting.
+
+

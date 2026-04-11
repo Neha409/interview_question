@@ -1,7 +1,10 @@
 Q1 if jenkins is not coming up where to check the issue and how to resolve
 
 Answer:
-First I check the Jenkins service status using systemctl. If it is not running, I check the Jenkins logs in /var/log/jenkins or journalctl to identify the error. Then I verify Java installation, check whether port 8080 is available, and confirm sufficient disk space and memory. I also check firewall rules and plugin failures. Based on the logs, I restart the service or fix the configuration issue.
+First I check the Jenkins service status using systemctl. If it is not running, I check the Jenkins logs in /var/log/jenkins or 
+journalctl to identify the error. Then I verify Java installation, check whether port 8080 is available, 
+and confirm sufficient disk space and memory. 
+I also check firewall rules and plugin failures. Based on the logs, I restart the service or fix the configuration issue.
 1. Check Jenkins Service Status
     sudo systemctl status jenkins
 2. Check Jenkins Logs

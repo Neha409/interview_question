@@ -1,0 +1,89 @@
+Question: Tell me about yourself.
+    Answer: hello I'm Neha Gupta and having 10yrs of experience in IT industry 
+            and 6 yrs of experience in cloud and DevOps. 
+            I have worked on cloud platforms like Azure and have hands on experience in Terraform, Ansible, Jenkins, Docker and Kubernetes. 
+            I work on Azure infrastructure using Terraform, manage CI/CD pipelines with Jenkins and GitHub Actions,
+            and deploy applications individual vm and on AKS. 
+            I also handle a multi-server data setup involving Linux, Windows, and SQL servers, 
+            ensuring smooth data flow and automation. 
+            My daily tasks include monitoring, troubleshooting, and improving system reliability,
+            along with managing security using Key Vault and RBAC.
+
+
+🎤 Next Question (Scenario – Important 🔥)
+
+question- Your production deployment failed in AKS and users are impacted. What steps will you take?
+
+“In case of a production deployment failure in AKS, my first step is to assess the impact and inform the relevant stakeholders or on-call team.
+If the issue is critical and affecting users, I immediately perform a rollback to the last stable version using Kubernetes rollout or Helm rollback to restore service quickly.
+Once the system is stable, I start troubleshooting by checking pod status, events, and logs using commands like kubectl describe and kubectl logs. I verify if the issue is related to configuration, secrets, image version, or resource constraints.
+I also check monitoring tools like Azure Monitor or Prometheus for alerts and metrics to understand the failure pattern.
+After identifying the root cause, I fix the issue—whether it’s configuration, code, or infrastructure—and validate in a lower environment before redeploying to production.
+If it’s a code-related issue, I coordinate with the development team and raise a ticket. Finally, I document the issue and implement preventive measures to avoid recurrence.”
+
+
+Question - “How do you manage and automate workflows across multiple servers (Linux, Windows, SQL Server)?”
+
+In my current organization, I manage a multi-server environment consisting of a Linux-based connect server, a Windows-based Python server, and a SQL Server.
+To automate workflows, I use Jenkins pipelines written in Groovy. Depending on the use case, I either create separate pipelines for each server or orchestrate them in a sequence to handle dependencies between systems.
+I use Ansible for configuration management and to execute tasks across both Linux and Windows servers, ensuring consistency and reducing manual effort.
+For secure handling of sensitive data like credentials and connection strings, I integrate Azure Key Vault with the pipelines.
+Additionally, I use Azure Storage Accounts (Blob containers) to store artifacts, configuration files, or third-party tool packages that are required during deployments.
+I also ensure proper logging and monitoring of jobs so that failures can be quickly identified and resolved. This setup helps maintain smooth data flow and reliable execution across all servers.”
+
+
+
+question-How do you troubleshoot a pod in CrashLoopBackOff state in Kubernetes (AKS)?
+
+To troubleshoot a pod in CrashLoopBackOff state in Kubernetes (AKS), I would follow these steps:
+“When a pod is in CrashLoopBackOff state, it means the container is repeatedly failing and Kubernetes is restarting it with backoff delay.
+My first step is to check the pod status and restart count using kubectl get pods. Then I use kubectl describe pod to review events 
+and identify any errors like OOMKilled, image pull issues, or probe failures.
+Next, I check the container logs using kubectl logs to understand the exact reason for the crash. If the container is restarting too 
+quickly, I also check previous logs using --previous.
+I verify common causes such as resource limits (CPU/memory), configuration issues (ConfigMaps/Secrets), environment variables, 
+or missing dependencies. For example, if it’s OOMKilled, I increase memory limits accordingly.
+I also check liveness and readiness probes, as incorrect probe configuration can cause repeated restarts.
+Once I identify the root cause, I fix the issue, test in a lower environment if needed, and then redeploy. Finally, 
+I monitor the pod to ensure stability.”
+
+
+Next Question (Terraform – Very Important 🔥)
+
+👉 How do you handle Terraform state and avoid conflicts when multiple people are working on the same infrastructure?
+
+
+“Terraform state is critical because it keeps track of the current infrastructure. To handle state safely and avoid conflicts when
+ multiple users are working, I use a remote backend in Azure Storage Account with Blob containers.
+This setup provides state locking, which ensures that only one person can modify the state at a time, preventing concurrent changes
+ and corruption.
+I also enforce RBAC policies to control access to the storage account, ensuring only authorized users or pipelines can modify the state.
+Additionally, I organize state files based on environments like dev, staging, and production, either using separate backend configurations
+or workspaces, to avoid accidental changes across environments.
+We also enable versioning and soft delete on the storage account, so we can recover previous state versions if needed.
+Overall, this approach ensures safe collaboration, prevents conflicts, and maintains consistency in infrastructure provisioning.”
+
+
+🎤 Next Question (CI/CD + Security – Very Important 🔥)
+
+👉 How do you secure secrets in CI/CD pipelines?
+
+In Jenkins, I use the credentials store to securely manage sensitive data like passwords, tokens, and keys, and reference 
+them in pipelines without hardcoding.
+In GitHub Actions, I use the Secrets section to store sensitive values, which are encrypted and automatically masked in logs.
+For enterprise-grade security, I integrate external secret management tools like Azure Key Vault or HashiCorp Vault. Instead 
+of storing secrets directly in pipelines, I fetch them dynamically at runtime using secure authentication methods like Managed Identity or service principals.
+I also ensure role-based access control (RBAC) so only authorized pipelines or users can access specific secrets. Additionally, 
+I follow best practices like regular secret rotation, avoiding exposure in logs, and never storing secrets in code repositories.
+This approach ensures that secrets are securely managed, centrally controlled, and compliant with security standards.”
+
+tell me about a major production issue you handled.”
+✅ What they check:
+Ownership
+Troubleshooting
+Calm under pressure
+👉 You can say this confidently:
+We had a production issue where an application deployed on AKS started failing due to a configuration mismatch. Users were impacted.
+
+I immediately checked logs and identified the issue. To minimize impact, I rely on Kubernetes native rollout mechanism. I use kubectl rollout undo to revert to the previous stable version, as Kubernetes maintains ReplicaSet history.
+Once service was restored, I fixed the configuration, tested it in staging, and redeployed. I also added validation checks in the pipeline to prevent similar issues.”

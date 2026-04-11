@@ -237,7 +237,8 @@ ans- To control resource utilization in a Kubernetes pod, you can specify resour
 
 question - when to use resouce ResourceQuota in k8s
 ans- ResourceQuota is used in Kubernetes to limit the amount of resources that can be consumed by a namespace. 
-      It is typically used in multi-tenant environments or when you want to enforce resource limits   on a specific namespace to prevent any single team or application from consuming excessive resources and impacting the overall performance of the cluster.
+      It is typically used in multi-tenant environments or when you want to enforce resource limits   on a specific namespace to prevent any single team 
+      or application from consuming excessive resources and impacting the overall performance of the cluster.
       By defining a ResourceQuota, you can set limits on CPU, memory, storage, and other resources for all the pods, services, and other resources created within that namespace. 
       This helps in managing resource allocation and ensuring fair usage across different teams or applications running in the same cluster.
  
@@ -256,12 +257,40 @@ ans- Node affinity and pod affinity are scheduling constraints in Kubernetes tha
     while pod affinity allows you to specify rules for scheduling pods based on the labels of other pods. 
    Both node affinity and pod affinity can be used to ensure that certain workloads are scheduled together or apart based on their requirements or characteristics.
 
+
+question- what is node selector in k8s
+ans- Node selector is a Kubernetes feature that allows you to specify a set of key-value pairs to select nodes for scheduling pods. 
+   It is a simple way to constrain pods to run on specific nodes based on their labels. 
+   By using node selector, you can ensure that certain pods are scheduled on nodes that meet specific criteria, such as having certain hardware capabilities or being in a particular availability zone. 
+   For example, you can use a node selector to schedule a pod on nodes that have a label "disktype=ssd" to ensure that the pod runs on nodes with solid-state drives.      
+   
+
 question - what is difference b/w configmap and secret in k8s
-ans - ConfigMap is used to store non-sensitive configuration data in key-value pairs, while Secret is used to store sensitive information such as passwords, API keys, and certificates. 
+ans - ConfigMap is used to store non-sensitive configuration data in key-value pairs, while Secret is used to store sensitive 
+   information such as passwords, API keys, and certificates. 
    ConfigMaps are typically used for application configuration, while Secrets are used for sensitive data that needs to be protected. 
-   Both ConfigMaps and Secrets can be mounted as volumes or exposed as environment variables in pods, but Secrets are encoded and stored securely to prevent unauthorized access.
+   Both ConfigMaps and Secrets can be mounted as volumes or exposed as environment variables in pods,
+    but Secrets are encoded and stored securely to prevent unauthorized access.
 
 question - how to create secret in k8s
+ans- You can create a secret in Kubernetes using the `kubectl create secret` command or by defining a Secret resource in a YAML file. 
+   For example, to create a generic secret using the command line, you can run:
+   ```
+   kubectl create secret generic my-secret --from-literal=username=myuser --from-literal=password=mypassword
+   ```
+   This will create a secret named "my-secret" with the specified key-value pairs. 
+   Alternatively, you can define a Secret in a YAML file like this:
+   ```yaml
+   apiVersion: v1
+   kind: Secret
+   metadata:
+     name: my-secret
+   type: Opaque
+   data:
+     username: bXl1c2Vy  # base64 encoded value of "myuser"
+     password: bXlwYXNzd29yZA==  # base64 encoded value of "mypassword"
+   ```
+   Then you can apply the YAML file using `kubectl apply -f secret.yaml` to create the secret in the cluster'
 
 question- how to get all resource in k8s cluster
  ans- kubectl get all --all-namespaces

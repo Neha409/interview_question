@@ -1,0 +1,57 @@
+question- Explain how can you make a Python Script executable on Unix?
+answer- Script file must begin with #!/usr/bin/env python
+example- #!/usr/bin/env python
+         print("Hello, World!")             
+
+question - What is the difference between a list and a tuple in Python?
+answer- The main difference between a list and a tuple in Python is that a list is mutable
+    (can be modified after creation), while a tuple is immutable (cannot be modified after creation).   
+    Lists are defined using square brackets [] and can contain elements of different types, while tuples are defined using parentheses ()
+     and can also contain elements of different types.
+
+question- What is an attribute in Python?
+answer- An attribute in Python is a value associated with an object that can be accessed using dot  notation. 
+Attributes can be variables or methods that belong to an object. For example, 
+if you have a class `Car` with an attribute `color`, you can access it like this: `car.color`. 
+Attributes are used to store data and define the behavior of objects in Python.
+
+
+question - What is the difference between a class and an object in Python?
+answer- A class in Python is a blueprint for creating objects. It defines a set of attributes and methods that the objects 
+of the class can have. An object, on the other hand, is an instance of a class. 
+When you create an object of a class, you are creating a specific realization of that 
+class with its own unique state and behavior.
+
+
+
+
+question- Python vs Bash – When to Use What?
+
+| Feature        | Python             | Bash                                |
+| -------------- | ------------------ | ----------------------------------- |
+| Learning curve | Easy & readable    | Simple but tricky for complex logic |
+| Best for       | Complex automation | Quick system tasks                  |
+| Syntax         | Clean, structured  | Command-based                       |
+| Error handling | Strong             | Limited                             |
+| Cross-platform | Yes                | Mostly Linux/Unix                   |
+| Libraries      | Huge ecosystem     | Minimal                             |
+
+1. Use Bash When 👇
+✅ Best for quick & simple tasks
+File operations
+Log parsing
+Running Linux commands
+Cron jobs
+System automation
+
+2. Use Python When 👇
+✅ Best for complex automation & logic
+API integration
+Data processing
+CI/CD automation
+Cloud automation (Azure SDK)
+Multi-step workflows
+
+
+
+
