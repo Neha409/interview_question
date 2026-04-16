@@ -4,3 +4,8 @@ Answer: You can use the `set -x` option at the beginning of your script to enabl
         Alternatively, you can use `echo` statements to print variable values and execution points for troubleshooting.
 
 
+question- what is sudo user 
+Answer: A sudo user is a user account that has been granted permission to execute commands with superuser (root) privileges using the `sudo` command. 
+        This allows the user to perform administrative tasks without needing to log in as the root user, 
+        providing a safer way to manage system permissions and security.
+

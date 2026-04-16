@@ -140,3 +140,23 @@ Question how to can migrated on-premises resources to auzre
 3. Migration: Use Azure Migrate to migrate your on-premises resources to Azure, which
     can be done using various migration tools and services, such as Azure Site Recovery for virtual machines, 
     Azure Database Migration Service for databases, and Azure App Service Migration Assistant for web applications.
+
+
+
+What is the difference between:
+
+Service Endpoint
+Private Endpoint
+
+And when will you use each?
+
+Service Endpoint allows a Virtual Network to securely access Azure services over the Azure backbone network. 
+The service still uses a public endpoint, but access is restricted to specific VNets, improving security compared 
+to open internet access.
+Private Endpoint, on the other hand, assigns a private IP from the VNet to the Azure service, making it accessible
+only within the private network. It completely removes exposure to the public internet.
+The main difference is that Service Endpoint secures traffic to a public endpoint, while Private Endpoint provides full 
+private connectivity using a private IP.
+In my projects, I use Service Endpoints for simpler setups where moderate security is sufficient, 
+and Private Endpoints when strict security and network isolation are required, especially for sensitive resources 
+like databases or storage accounts.

@@ -85,5 +85,20 @@ Calm under pressure
 👉 You can say this confidently:
 We had a production issue where an application deployed on AKS started failing due to a configuration mismatch. Users were impacted.
 
-I immediately checked logs and identified the issue. To minimize impact, I rely on Kubernetes native rollout mechanism. I use kubectl rollout undo to revert to the previous stable version, as Kubernetes maintains ReplicaSet history.
+I immediately checked logs and identified the issue. To minimize impact, I rely on Kubernetes native rollout mechanism. 
+I use kubectl rollout undo to revert to the previous stable version, as Kubernetes maintains ReplicaSet history.
 Once service was restored, I fixed the configuration, tested it in staging, and redeployed. I also added validation checks in the pipeline to prevent similar issues.”
+
+question - You have multiple deployments in a day and frequent failures.
+How will you improve the system stability?
+
+First, I will analyze the root cause of frequent failures by reviewing pipeline logs, application logs, and monitoring data to identify patterns such as configuration issues, 
+resource constraints, or network problems.
+Once identified, I will fix the root causes and document them to avoid recurrence.
+To improve stability, I will enhance the CI/CD pipeline by adding proper validation steps like automated testing, 
+code quality checks, and environment-specific configurations.
+I will also implement better deployment strategies such as rolling updates or blue-green deployments to 
+minimize impact during releases.
+Additionally, I will set up monitoring and alerting using tools like Prometheus, Grafana, 
+or Azure Monitor to proactively detect issues.
+
