@@ -9,11 +9,70 @@ answer- The main difference between a list and a tuple in Python is that a list 
     Lists are defined using square brackets [] and can contain elements of different types, while tuples are defined using parentheses ()
      and can also contain elements of different types.
 
-question- What is an attribute in Python?
-answer- An attribute in Python is a value associated with an object that can be accessed using dot  notation. 
-Attributes can be variables or methods that belong to an object. For example, 
-if you have a class `Car` with an attribute `color`, you can access it like this: `car.color`. 
+
+question- what is difference == and is in python
+answer- The `==` operator in Python checks for value equality, meaning it checks if the
+values of the objects being compared are equal. The `is` operator, on the other hand, checks for identity, meaning it checks if both operands refer to the same object in memory.
+For example:
+```python
+a = [1, 2, 3]
+b = [1, 2, 3]       
+if a == b:
+    print("a and b are equal")  # This will print because their values are the same
+if a is b:
+    print("a and b are the same object")  # This will not print because and b are different objects in memory
+```
 Attributes are used to store data and define the behavior of objects in Python.
+
+
+question what is lambda function in python
+answer- A lambda function in Python is an anonymous function that can have any number of arguments but
+    can only have one expression. It is defined using the `lambda` keyword and is often used for short, simple functions that are not reused elsewhere in the code. Lambda functions are commonly used in situations where a small function is needed for a short period of time, such as in sorting or filtering operations. For example:
+```python
+# A lambda function that adds two numbers
+add = lambda x, y: x + y
+print(add(2, 3))  # Output: 5
+```     
+
+question - What is difference between agrs and kwargs in python
+answer- In Python, `*args` and `**kwargs` are used to pass a variable number of arguments to a function. `*args` allows you to pass 
+        a variable number of non-keyword arguments as a tuple, while `**kwargs` allows you to pass a variable number of keyword arguments as a dictionary.
+For example:
+```python
+def example_function(*args, **kwargs):
+    print("Positional arguments:", args)
+    print("Keyword arguments:", kwargs)         
+example_function(1, 2, 3, name="Alice", age=30)
+```
+Output:
+```Positional arguments: (1, 2, 3)
+Keyword arguments: {'name': 'Alice', 'age': 30}
+```         
+
+question- what is generator in python
+answer- A generator in Python is a special type of iterator that allows you to iterate over a
+sequence of values without storing the entire sequence in memory at once. Generators are defined using a function that contains one or more `yield`
+ statements. When the generator function is called, it returns a generator object that can be iterated over. Each time the `yield` statement is executed, 
+ the current state of the generator is saved, and the value is returned to the caller. The next time the generator is iterated, it resumes execution from where it left off.
+  This makes generators memory-efficient and useful for working with large datasets or infinite sequences. For example:
+```python
+def my_generator():
+    yield 1
+    yield 2
+    yield 3
+
+for value in my_generator():
+    print(value)
+```
+Output:
+```
+1
+2
+3
+```
+
+
+question- what
 
 
 question - What is the difference between a class and an object in Python?
@@ -53,5 +112,99 @@ Cloud automation (Azure SDK)
 Multi-step workflows
 
 
+question- what is list Comprehension in Python
+answer- List comprehension in Python is a concise way to create lists. It allows you to generate
+a new list by applying an expression to each item in an iterable, while optionally filtering items 
+using a condition. The syntax for list comprehension is:
+
+```python
+[expression for item in iterable if condition]
+```
+For example, to create a list of squares for even numbers from 0 to 9, you can use:
+```pythonsquares = [x**2 for x in range(10) if x % 2 == 0]
+print(squares)  # Output: [0, 4, 16, 36, 64]
+```
+This will generate a list of squares for the even numbers in the specified range. List comprehensions are often more readable and efficient than using traditional loops for creating lists.
+
+question- What is the difference between a shallow copy and a deep copy in Python?
+answer- In Python, a shallow copy creates a new object but does not create copies of the objects that the original 
+object references. Instead, it simply copies the references to those objects. This means that if you modify a mutable 
+object in the original, it will also affect the shallow copy since they reference the same object.
+ You can create a shallow copy using the `copy` module's `copy()` function.
+On the other hand, a deep copy creates a new object and also recursively copies all objects that the original object 
+references. This means that modifications to mutable objects in the original will not affect the deep copy,
+ as they are completely independent. You can create a deep copy using the `copy` module's `deepcopy()` function.
+
+For example:
+```python
+import copy     
+original = [1, 2, [3, 4]]
+shallow_copy = copy.copy(original)
+deep_copy = copy.deepcopy(original)
+# Modifying the nested list in the original
+original[2][0] = 'X'
+print(shallow_copy)  # Output: [1, 2, ['X', 4]] (affected by change)
+print(deep_copy)     # Output: [1, 2, [3, 4]] (not affected by change)
+``` 
+question- What is the difference between a module and a package in Python?
+answer- In Python, a module is a single file that contains Python code, such as functions, classes, and variables. 
+It is a way to organize and reuse code. A package, on the other hand, is a directory that contains multiple modules and a 
+special `__init__.py` file, which makes it recognizable as a package to Python. 
+Packages are used to organize related modules and provide a hierarchical structure for larger projects.
+
+question- What is the difference between a function and a method in Python?
+answer- In Python, a function is a block of reusable code that performs a specific task and
+can be defined using the `def` keyword. A method, on the other hand, is a function that is associated with an object and is defined within a class.
+Methods are called on objects and can access and modify the object's attributes, while functions are independent and do not have access to the object's state unless explicitly passed as arguments. For example:
+```python
+class MyClass:
+    def my_method(self):
+        print("This is a method.")
+
+def my_function():
+    print("This is a function.")
+```
+
+question- what is the static class and class in python
+answer- In Python, a class is a blueprint for creating objects that encapsulates data and behavior. It defines attributes and methods that the objects of the class can have. A static class, on the other hand, is not a built-in concept in Python, but it can be implemented using a class with only static methods and no instance attributes. Static methods are defined using the `@staticmethod` decorator and do not require an instance of the class to be called. They are typically used for utility functions that are related to the class but do not need access to instance-specific data. For example:
+```python
+ class MyClass:
+    @staticmethod
+    def my_static_method():
+        print("This is a static method.")  
+```In this example, `my_static_method` can be called without creating an instance of `MyClass`, 
+    and it does not have access to any instance attributes.
 
 
+
+
+question - how many try can have in expect block in python
+answer- In Python, you can have multiple `except` blocks to handle different types of exceptions
+in a `try` statement. There is no limit to the number of `except` blocks you can have, and you can also include a 
+generic `except` block to catch any exceptions that are not specifically handled by the previous blocks. For example:
+```pythontry:
+    # Some code that may raise exceptions
+except ValueError:
+    print("Caught a ValueError")        
+except TypeError:
+    print("Caught a TypeError")
+except Exception as e:
+    print(f"Caught an unexpected exception: {e}")
+```In this example, there are three `except` blocks to handle `ValueError`, `TypeError  
+and any other unexpected exceptions. You can add as many `except` blocks as needed to handle 
+different types of exceptions in your code.
+
+
+question - what is finally block in python
+answer- In Python, a `finally` block is a section of code that is executed after
+    the `try` block and any associated `except` blocks, regardless of whether an exception was raised or not. 
+        The `finally` block is typically used to perform cleanup actions, such as closing files or releasing resources,
+         that need to be executed no matter what happens in the `try` block. For example:
+```python
+try:
+    # Some code that may raise an exception
+except ValueError:
+    print("Caught a ValueError")
+finally:            
+    print("This will always be executed, even if an exception is raised.")
+```In this example, the code in the `finally` block will be executed whether a `ValueError` is raised or not, ensuring that any necessary cleanup actions are performed.        

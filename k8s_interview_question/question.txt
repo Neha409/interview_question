@@ -358,3 +358,50 @@ This will allow your Kubernetes deployment to pull the specified image from Azur
 
 
 
+Question 2: Your pod is running, but the application is not accessible.
+ans- If the pod is running but the application is not accessible, I would follow a layered troubleshooting approach.
+First, I check the pod logs and description using kubectl logs and kubectl describe pod to ensure the application 
+inside the container is running correctly.
+Next, I verify connectivity inside the cluster by exec into the pod and using curl to confirm 
+the application is responding on the expected port.
+Then I check the service configuration using kubectl get svc and kubectl describe svc to 
+ensure the correct port mapping and selector are configured. 
+I also verify endpoints using kubectl get endpoints to confirm the pod is correctly linked to the service.
+If the service is exposed externally, I check the service type (NodePort/LoadBalancer) or Ingress configuration to ensure proper routing.
+Finally, I verify network policies or firewall rules that might be blocking access."
+
+
+Question- Your application is deployed in Kubernetes, but the pod is stuck in Pending state.
+
+If a pod is in Pending state, I would first describe the pod using kubectl describe pod <pod-name> to check events 
+and identify the exact reason.If it's a scheduling issue, I would check node availability using kubectl get nodes 
+and verify if there are enough resources like CPU and memory.
+I would also check for node selectors, taints, and tolerations that might restrict scheduling.
+If the pod is using persistent volumes, I would verify PVC status to ensure it is bound.
+Based on the findings, I would fix the issue—like adjusting resource requests, correcting node selectors, 
+or adding tolerations."
+
+
+Question - Your application is deployed in Kubernetes, but users are reporting slow performance.
+anns- If users report slow performance, I would follow a layered troubleshooting approach.
+First, I check application logs and metrics to identify where the delay is occurring.
+Then I verify pod resource utilization using kubectl top pod to check if CPU or memory is saturated. If needed, 
+I scale the application horizontally or adjust resource limits.
+Next, I analyze service and network latency within the cluster, including communication between microservices 
+and external dependencies like databases.
+I also check if the application is under heavy load and verify if autoscaling (HPA) is properly configured.
+Additionally, I review liveness/readiness probes and request handling to ensure traffic is properly balanced.
+Finally, I use monitoring tools like Prometheus and Grafana to identify bottlenecks and optimize accordingly."
+
+
+
+
+
+
+
+
+
+
+
+
+

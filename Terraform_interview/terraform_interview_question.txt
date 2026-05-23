@@ -239,14 +239,11 @@ timestamp()
 
 
 question - how to identify the drift in terraform
-ans - to identify drift in Terraform, you can use the `terraform plan` command. 
-This command compares the current state of your infrastructure with the desired state
- defined in your Terraform configuration files. I
-   if there are any differences (drift) between the actual infrastructure and the configuration,
-    Terraform will show those changes in the output of the plan. You can also use `terraform show`
-     to inspect the current state and compare it with your configuration to identify any discrepancies.
-and you can also use refresh command to update the state file with the current infrastructure state before running plan to get accurate drift detection.
-
+ans - Terraform drift is when the actual infrastructure differs from the Terraform state file. 
+We can detect drift using terraform plan -refresh-only, which compares real infrastructure with state 
+without making changes. If drift is detected, we can either reconcile it using terraform apply -refresh-only 
+or re-apply Terraform configuration to enforce desired state. To prevent drift, 
+we should avoid manual changes and enforce infrastructure changes only through Terraform pipelines.
 
 Question - If in azure we have few resouces are created manually than how can migrate those resources to terraform
 Answer - To migrate manually created Azure resources to Terraform, you can use the `terraform import` command. 
@@ -259,3 +256,26 @@ with Terraform going forward. You will need to repeat this process for each reso
 ensuring that your Terraform configuration accurately reflects the existing infrastructure.
 
 
+
+question - how to check the active lock on state file in terraform
+Answer - To check for active locks on a Terraform state file, you can use the 
+az storage blob show \
+  --container-name tfstate \
+  --name terraform.tfstate \
+  --account-name mystorageaccount
+
+output "lease": {
+  "state": "leased",
+  "status": "locked"
+}
+
+Break stale lease
+az storage blob lease break \
+  --blob-name terraform.tfstate \
+  --container-name tfstate \
+  --account-name mystorageaccount
+
+
+
+
+  65136
