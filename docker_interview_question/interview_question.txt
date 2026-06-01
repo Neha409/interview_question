@@ -30,6 +30,34 @@ ans- To create a Docker image, you need to follow these steps:
 4. Optionally, you can push the Docker image to a container registry like Docker Hub or Azure Container Registry for easier distribution and deployment. 
     Use the `docker push` command to upload your image to the registry after tagging it appropriately.
 
+question - write the dockerfile for python application
+ans- Here is an example of a Dockerfile for a Python application:
+```Dockerfile
+# Use an official Python runtime as a base image
+FROM python:3.9-slim    
+# Set the working directory in the container
+WORKDIR /app
+# Copy the requirements file into the container
+COPY requirements.txt .
+# Install the dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+# Copy the application code into the container
+COPY . .
+# Expose the port that the application will run on
+EXPOSE 80
+# Define the command to run the application
+CMD ["python", "app.py"]
+```
+In this Dockerfile:
+- We start with a base image of Python 3.9-slim.
+- We set the working directory to /app.
+- We copy the requirements.txt file and install the dependencies using pip.
+- We then copy the rest of the application code into the container.
+- We expose port 80, which is the port the application will run on.
+- Finally, we define the command to run the application using CMD, which will execute `python
+app.py` when the container starts.
+
+
 
 Question- how to scan docker image for vulnerabilities
 ans- To scan a Docker image for vulnerabilities, you can use tools like Trivy, Clair, or Snyk. 
@@ -39,7 +67,8 @@ The tool will provide a report of any vulnerabilities found, including their sev
 Snyk also offers integration with Docker and can be used to continuously monitor your images for vulnerabilities and provide actionable insights to fix them.
 command- Snyk test --docker myimage:latest --file=Dockerfile
 
-
+synk monitor --docker myimage:latest --file=Dockerfile
+synk test --docker myimage:latest --file=Dockerfile --severity-threshold=high   
 
 question- how can create network in docker
 ans- To create a network in Docker, you can use the `docker network create` command
@@ -58,7 +87,9 @@ Answer- To set up containers that do not communicate with other Docker container
     This will create a network that is isolated from other networks, and containers connected to this network will not be able to 
     communicate with containers on other networks. You can then run your containers and connect them to the "isolated_network" using the `--network` flag
     when running the container. For example:
-    ```docker run -d --name mycontainer --network isolated_network myimage:latest
+    ```docker run -d --name mycontainer --network isolated_network myimage:latest 
+
+    docker run -d --name mycontainer --network customnetwork myimage:latest
     2️⃣ docker network create --internal isolated_network
 
     Command:

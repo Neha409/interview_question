@@ -124,6 +124,8 @@ For example, to create a list of squares for even numbers from 0 to 9, you can u
 ```pythonsquares = [x**2 for x in range(10) if x % 2 == 0]
 print(squares)  # Output: [0, 4, 16, 36, 64]
 ```
+
+x**2 for x in range(10) if x % 3 == 0
 This will generate a list of squares for the even numbers in the specified range. List comprehensions are often more readable and efficient than using traditional loops for creating lists.
 
 question- What is the difference between a shallow copy and a deep copy in Python?

@@ -3,3 +3,7 @@ answer- The `adduser` and `useradd` commands in Linux are both used to create ne
 - `useradd` is a simple command that creates a new user account with basic settings.
 - `adduser` is a more interactive command that provides a wizard-like interface to create user accounts with 
    additional options and configurations.
+
+
+
+   
