@@ -148,3 +148,61 @@ one example:
     - geerlingguy.apache
 In this example, we are using the `geerlingguy.apache` role from Ansible Galaxy.
 This role will automatically install and configure the Apache web server on the target hosts defined in the `web_servers` group. By leveraging Ansible Galaxy roles, you can quickly implement common configurations and best practices without having to write all the tasks yourself, allowing for faster and more efficient automation.
+
+
+
+
+
+
+question : - what is buildin module in ansible
+answer: Built-in modules in Ansible are pre-defined, ready-to-use modules that come with
+Ansible. These modules provide a wide range of functionality for managing various aspects of systems, 
+applications, and services. Built-in modules cover tasks such as file manipulation, package management, user management, network configuration, and more.
+These modules are designed to simplify automation tasks and allow users to perform complex operations with minimal code.
+Ansible's built-in modules are well-documented and maintained by the Ansible community, ensuring that they are reliable and up-to-date. Users can leverage these modules in their playbooks to automate
+examples
+- name: Example of using built-in Ansible module
+  hosts: target_machine
+  tasks:
+    - name: Create a directory using the file module
+      file:
+        path: /path/to/directory
+        state: directory    
+
+In this example, we are using the built-in `file` module to create a directory on the target machine. The `path` parameter specifies the location of the directory, and the `state: directory` parameter indicates that we want to ensure that the specified path is a directory.
+By using built-in modules, you can easily perform a wide variety of tasks without needing to write
+give me some example of built in module in ansible
+Here are some examples of built-in modules in Ansible:
+1.   `file`: Used for managing files and directories (e.g., creating, deleting, or modifying files and directories).
+2.   `copy`: Used for copying files from the control machine to the target machines.
+3.   `yum`: Used for managing packages on Red Hat-based systems (e.g.,
+installing, updating, or removing packages).
+4.   `apt`: Used for managing packages on Debian-based systems (e.g., installing, updating, or removing packages).
+5.   `user`: Used for managing user accounts (e.g., creating, modifying, or deleting user accounts).
+6.   `service`: Used for managing services (e.g., starting, stopping, or restarting services).
+7.   `command`: Used    
+for executing arbitrary commands on the target machines.
+8.   `shell`: Similar to the `command` module but allows for more complex shell commands and supports features like pipes and redirection.
+9.   `git`: Used for managing Git repositories.
+
+question - What are Handlers?
+
+Answer:
+Handlers are triggered only when a task reports a change.
+
+Example:
+
+tasks:
+  - name: Update nginx config
+    copy:
+      src: nginx.conf
+      dest: /etc/nginx/nginx.conf
+    notify: Restart nginx
+
+handlers:
+  - name: Restart nginx
+    service:
+      name: nginx
+      state: restarted
+
+

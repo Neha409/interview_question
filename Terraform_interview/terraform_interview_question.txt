@@ -276,6 +276,96 @@ az storage blob lease break \
   --account-name mystorageaccount
 
 
+question - what is taint in terraform
+Answer - Taint in Terraform is a command that marks a resource as needing to be destroyed and
+recreated on the next apply. This is useful when a resource is in a bad state or has become corrupted. 
+When you run `terraform taint <resource>`, Terraform will destroy the existing resource and 
+create a new one during the next apply, ensuring that the infrastructure is refreshed and any issues are resolved.
+
+question - what is terraform detect and how to use it
+Answer - Terraform Detect is a command that checks for changes in the infrastructure without making any modifications.
+It is used to identify any drift between the actual infrastructure and the Terraform state file.
+To use Terraform Detect, you can run:
+```terraform plan -refresh-only```
+This command will compare the real infrastructure with the state file and show any differences without applying changes.
+If you want to reconcile the drift, you can run:
+```terraform apply -refresh-only```
+This will update the state file to match the actual infrastructure without making any changes to the resources.
 
 
-  
+Question - how to rollback a terraform deployment
+Answer - To rollback a Terraform deployment, you can use the `terraform apply` command with a
+previously saved plan file that represents the desired state before the changes were applied.
+1. First, you need to have a saved plan file from before the deployment. You can create a plan file using:
+```terraform plan -out=planfile.tfplan```
+2. If you need to rollback, you can apply the saved plan file:
+```terraform apply planfile.tfplan```
+This will revert the infrastructure to the state defined in the plan file, effectively rolling back any changes
+made during the deployment. It is important to note that you should have the plan file saved before applying changes, 
+as Terraform does not automatically save previous states for rollback.
+
+
+question- if terraform apply fails in the middle of deployment, how to recover it
+Answer - If a Terraform apply fails in the middle of deployment, you can recover by following these steps:
+1. Identify the failed resources by checking the Terraform output and logs.
+2. Run `terraform plan` to see the current state of the infrastructure and identify any discrepancies
+3. If the state file is locked, check for active locks and break them if necessary using
+   `az storage blob lease break` for Azure or the equivalent command for your backend.
+4. Fix any issues that caused the failure, such as correcting configuration errors or resolving resource conflicts
+5. Run `terraform apply` again to retry the deployment. Terraform will only attempt to create
+   or modify the resources that were not successfully applied in the previous attempt, allowing you to recover from the failure without affecting already deployed resources.
+
+question- if terraform apply successfully applied but in azure portal the resource is not created, how to troubleshoot it
+Answer - If Terraform apply reports success but the resource is not visible in the Azure portal, you
+
+   can troubleshoot the issue by following these steps:
+1. Verify the Terraform state file to ensure that the resource is recorded as created. You can use `terraform state list` to check if the resource exists in the state.
+2. Check the Azure portal for any filters or subscriptions that might be hiding the resource. Ensure you are looking in the correct subscription and resource group.
+3. Use the Azure CLI or PowerShell to query the resource directly. For example, you can use `az resource show --name <resource_name> --resource-group <resource_group>` to check if the resource exists.
+4. Review the Terraform configuration and ensure that the resource is defined correctly, including the correct provider and region.
+5. Check for any errors or warnings in the Terraform apply output that might indicate issues during resource creation.
+6. If the resource is still not found, consider running `terraform refresh` to update the state file with the actual state of the infrastructure, and then check again.
+7. If necessary, you can also check the Azure Activity Log to see if there were any issues or failures during the resource creation process     
+
+question - what is taint in terraform
+Answer - Taint in Terraform is a command that marks a resource as needing to be destroyed and
+   recreated on the next apply. This is useful when a resource is in a bad state or has become corrupted. 
+   When you run `terraform taint <resource>`, Terraform will destroy the existing resource   and        
+create a new one during the next apply, ensuring that the infrastructure is refreshed and any issues are resolved.
+      
+
+
+question- what is difference between provider and Provisioner  in terraform
+Answer - In Terraform, a provider is a plugin that allows Terraform to interact with a specific cloud
+   platform or service, such as AWS, Azure, or Google Cloud. 
+   Providers define the resources and data sources available for that platform and handle the API interactions required 
+   to create, read, update, and delete resources. Examples of providers include `aws`, `azurerm`, and `google`.
+   provisioners, on the other hand, are used to execute scripts or commands on a resource after it has been created.
+   Provisioners can be used to perform configuration tasks, such as installing software, copying files, or 
+   running custom scripts on the resource. Examples of provisioners include `remote-exec` and `local-exec`. 
+
+question- write the main.tf file if moudules are in different git repo 
+Answer - To use a module from a different Git repository in your main.tf file, you can specify the source of the module using the `source` argument.
+Here is an example of how to reference a module from a different Git repository:
+```hcl
+module "my_module" {
+  source = "git::https://github.com/example/my-module.git"
+  # You can also specify a specific branch, tag, or commit
+  # source = "git::https://github.com/example/my-module.git?ref=v1.0.0"
+   # Module variables can be passed here
+}
+```        
+In this example, replace `https://github.com/example/my-module.git` with the actual URL of the Git repository containing the module.
+
+
+question- if accidentally we deleted the terraform state file and when we do terraform apply what will happened
+answer-: If the Terraform state file is accidentally deleted and you run `terraform apply`, 
+Terraform will not have any record of the existing resources in your infrastructure. 
+As a result, it will treat all resources as new and attempt to create them again. 
+This can lead to duplicate resources being created, which may cause conflicts or errors, 
+especially if the resources already exist in the cloud provider.
+
+
+
+
+

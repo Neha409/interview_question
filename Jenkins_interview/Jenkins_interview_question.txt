@@ -210,7 +210,11 @@ health checks, and multi-cluster support, making it a powerful tool for managing
 By using ArgoCD, you can achieve faster and more reliable deployments while maintaining a clear audit trail of changes through Git.
 
 
-
-
+question- difference between mvn clean package and mvn install
+Answer: The difference between `mvn clean package` and `mvn install` lies in their purpose and 
+        the stages of the Maven build lifecycle they invoke.
+1. `mvn clean package`: This command cleans the project by removing the target directory and then compiles the source code, runs tests, and packages the compiled code into a distributable format (like a JAR or WAR file) in the target directory. It does not install the package into the local Maven repository.
+2. `mvn install`: This command goes a step further by not only cleaning, compiling, testing, and packaging the code but also installing the resulting artifact into the local Maven repository. This allows other projects on the same machine to use the built artifact as a dependency. In summary, `
+`mvn clean package` is used for building the project and creating the artifact, while `mvn install` is used for building the project and making the artifact available for other projects to use.   
 
 

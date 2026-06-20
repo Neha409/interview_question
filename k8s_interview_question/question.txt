@@ -362,6 +362,7 @@ Question 2: Your pod is running, but the application is not accessible.
 ans- If the pod is running but the application is not accessible, I would follow a layered troubleshooting approach.
 First, I check the pod logs and description using kubectl logs and kubectl describe pod to ensure the application 
 inside the container is running correctly.
+kubectl exec -it <pod-name> -- /bin/bash
 Next, I verify connectivity inside the cluster by exec into the pod and using curl to confirm 
 the application is responding on the expected port.
 Then I check the service configuration using kubectl get svc and kubectl describe svc to 
@@ -393,6 +394,55 @@ I also check if the application is under heavy load and verify if autoscaling (H
 Additionally, I review liveness/readiness probes and request handling to ensure traffic is properly balanced.
 Finally, I use monitoring tools like Prometheus and Grafana to identify bottlenecks and optimize accordingly."
 
+
+
+question - how can upgrade the kubernetes cluster
+ans- To upgrade a Kubernetes cluster, I would follow these steps:
+1. Review the Kubernetes release notes to understand the changes and new features in the target version.
+2. Backup the cluster state and important data to ensure you can roll back if needed.
+3. Upgrade the control plane components first, starting with the API server, controller manager, and
+
+scheduler. This can be done using the cluster management tool (like kubeadm, kops, or managed services like EKS/GKE/AKS).
+4. After the control plane is upgraded, I would upgrade the worker nodes. This typically involves
+draining each node, upgrading the kubelet and kube-proxy, and then uncordoning the node to bring it back into service.
+5. I would monitor the cluster during and after the upgrade to ensure all components are functioning correctly and that there are no issues with workloads or services.
+6. Finally, I would test the applications running in the cluster to ensure they are compatible with the new Kubernetes version and that there are no regress      
+
+
+
+question  what happened when kubectl apply -f deployement.yml get called
+answer:- 
+kubectl
+   |
+   v
+API Server
+   |
+   +------> Authentication
+   |
+   +------> Authorization (RBAC)
+   |
+   +------> Admission Controllers
+   |
+   v
+etcd
+   |
+   v
+Controller Manager
+   |
+   v
+Scheduler
+   |
+   v
+Worker Node
+   |
+   v
+Kubelet
+   |
+   v
+Container Runtime
+   |
+   v
+Pod Running
 
 
 

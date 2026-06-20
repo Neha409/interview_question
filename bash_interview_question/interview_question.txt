@@ -9,3 +9,14 @@ Answer: A sudo user is a user account that has been granted permission to execut
         This allows the user to perform administrative tasks without needing to log in as the root user, 
         providing a safer way to manage system permissions and security.
 
+question - How do you find a file in Linux?
+find / -name "app.log" 2>/dev/null
+find /var/log -type f -name "*.log"
+
+
+
+
+
+
+
+
