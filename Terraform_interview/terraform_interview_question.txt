@@ -353,6 +353,7 @@ module "my_module" {
   # You can also specify a specific branch, tag, or commit
   # source = "git::https://github.com/example/my-module.git?ref=v1.0.0"
    # Module variables can be passed here
+
 }
 ```        
 In this example, replace `https://github.com/example/my-module.git` with the actual URL of the Git repository containing the module.

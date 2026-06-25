@@ -217,4 +217,24 @@ Answer: The difference between `mvn clean package` and `mvn install` lies in the
 2. `mvn install`: This command goes a step further by not only cleaning, compiling, testing, and packaging the code but also installing the resulting artifact into the local Maven repository. This allows other projects on the same machine to use the built artifact as a dependency. In summary, `
 `mvn clean package` is used for building the project and creating the artifact, while `mvn install` is used for building the project and making the artifact available for other projects to use.   
 
+question- what is difference between blackduck and sonarqube
+Answer: Black Duck and SonarQube are both tools used in the software development lifecycle,
+but they serve different purposes and focus on different aspects of code quality and security.
+1. Black Duck: Black Duck is a software composition analysis (SCA) tool that focuses
+    on identifying and managing open-source components in your codebase. It scans your code for open-source libraries and dependencies, checks for known security vulnerabilities, license compliance issues, and provides detailed reports on the risks associated with using those components. Black Duck helps organizations ensure that they are using open-source software responsibly and securely.
+
+2. SonarQube: SonarQube is a code quality and security analysis tool that focuses on
+    identifying bugs, vulnerabilities, and code smells in your codebase. It provides detailed reports and dashboards to help developers improve code quality and maintainability. SonarQube supports multiple programming languages and integrates well with CI/CD pipelines like Jenkins.
+
+
+
+question- - When would you use agent none?
+
+Answer:
+I use agent none when different stages require different build environments or when I
+ want to optimize executor usage. For example, building on a Linux node, 
+ running tests on a Windows node, and deploying from a dedicated deployment node. 
+ This prevents a single executor from being occupied for the entire pipeline duration.
+
+
 

@@ -50,3 +50,7 @@ print(expected)
 actual = sum(nums)
 
 print(expected-actual)
+
+
+print(3/4)
+print(type(3/4))
