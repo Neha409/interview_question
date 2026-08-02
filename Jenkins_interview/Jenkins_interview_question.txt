@@ -237,4 +237,18 @@ I use agent none when different stages require different build environments or w
  This prevents a single executor from being occupied for the entire pipeline duration.
 
 
+question- How Do You Handle Parallel Execution?
+stage('Test') {
+    parallel {
+        stage('Unit Test') {
+            steps {
+                sh 'pytest'
+            }
+        }
 
+        stage('Integration Test') {
+            steps {
+                sh 'run-integration-tests.sh'
+            }
+        }
+    }

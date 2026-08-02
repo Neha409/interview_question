@@ -67,8 +67,8 @@ The tool will provide a report of any vulnerabilities found, including their sev
 Snyk also offers integration with Docker and can be used to continuously monitor your images for vulnerabilities and provide actionable insights to fix them.
 command- Snyk test --docker myimage:latest --file=Dockerfile
 
-synk monitor --docker myimage:latest --file=Dockerfile
-synk test --docker myimage:latest --file=Dockerfile --severity-threshold=high   
+snyk monitor --docker myimage:latest --file=Dockerfile
+snyk test --docker myimage:latest --file=Dockerfile --severity-threshold=high   
 
 question- how can create network in docker
 ans- To create a network in Docker, you can use the `docker network create` command
