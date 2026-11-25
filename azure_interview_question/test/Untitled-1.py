@@ -4,10 +4,9 @@ x= [3,4,5,6,7,8,9]
 
 last_element = x[-1]
 
-frist_element = x[0]
+first_element = x[0]
 
-range = last_element - frist_element
-``
+range = last_element - first_element
 r = int((range/2) + 1)
 print(r)
 count = 0

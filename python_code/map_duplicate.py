@@ -8,7 +8,7 @@ data = [{"name" : "xyz", "email": "xyz@gmail.com"},
 
 email_list = [i["email"] for i in data]
 print(email_list)
-counter = Counter()
+
 counter = Counter(email_list)
 print(counter)
 res_list =[]

@@ -341,7 +341,7 @@ spec:
        matchLabels:
            app: my-app
    template:
-       metadata:
+         metadata:
            labels:     
                app: my-app
          spec:
@@ -447,8 +447,34 @@ Pod Running
 
 
 
+Question- what is static pod in kubernetes
+Answer: A static pod in Kubernetes is a pod that is managed directly by the kubelet 
+on a specific node, rather than being managed by the Kubernetes API server. 
+Static pods are defined in a manifest file on the node's filesystem, typically located 
+in the /etc/kubernetes/manifests directory
+. The kubelet continuously monitors this directory and automatically creates, updates,
+ or deletes the static pods based on the manifest files present.
 
+question- what is NAT-gateway in kubernetes
+Answer: A NAT (Network Address Translation) gateway in Kubernetes is a network 
+component that allows pods within a private network to access external resources on 
+the internet while keeping their internal IP addresses hidden.   
 
+Question- what is CNI in kubernetes
+Answer: CNI (Container Network Interface) in Kubernetes is a specification and set of 
+libraries for configuring network interfaces in Linux containers. It provides a 
+standardized way to manage networking for containers, allowing different networking 
+solutions to be plugged into Kubernetes. CNI plugins handle tasks such as assigning 
+IP addresses to pods, setting up routing, and managing network policies. 
+Popular CNI plugins include Calico, Flannel, and Weave Net.
+
+question: how request reach to pod from outside of the cluster
+Answer: When a request reaches a pod from outside the Kubernetes cluster, it typically follows these steps:
+1. The request is sent to the external IP address of the cluster, which is usually associated with a LoadBalancer service or an Ingress controller.
+2. The LoadBalancer or Ingress controller receives the request and determines which service it should be routed to based on the request's hostname, path, or other routing rules defined in the Ingress resource.
+3. The service then selects one of the pods that match its label selector and forwards the request to that pod.
+4. The kube-proxy running on the node where the pod is located handles the network routing and ensures that the request reaches the correct pod.
+5. The pod processes the request and sends the response back through the same path, ultimately returning it to the client that made the original request.   
 
 
 

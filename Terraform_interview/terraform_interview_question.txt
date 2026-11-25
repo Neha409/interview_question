@@ -239,11 +239,18 @@ timestamp()
 
 
 question - how to identify the drift in terraform
-ans - Terraform drift is when the actual infrastructure differs from the Terraform state file. 
-We can detect drift using terraform plan -refresh-only, which compares real infrastructure with state 
-without making changes. If drift is detected, we can either reconcile it using terraform apply -refresh-only 
-or re-apply Terraform configuration to enforce desired state. To prevent drift, 
-we should avoid manual changes and enforce infrastructure changes only through Terraform pipelines.
+ans - “I use Terraform drift detection to identify differences between the declared 
+configuration, Terraform state, and actual Azure resources. For a manual change, 
+I first run terraform plan or terraform plan -refresh-only to inspect the differences. 
+I determine whether the change was intentional or unauthorized and assess the 
+production impact.
+If the change is unwanted, I update the infrastructure through an approved Terraform 
+plan to restore the desired state. If the change is approved, I update the Terraform 
+configuration and reconcile the state where necessary. I can automate recurring checks 
+through GitHub Actions or HCP Terraform health assessments and send alerts when drift 
+is detected. I never automatically apply a drift correction in production without 
+reviewing the proposed changes.”void manual changes and enforce infrastructure changes 
+only through Terraform pipelines.
 
 Question - If in azure we have few resouces are created manually than how can migrate those resources to terraform
 Answer - To migrate manually created Azure resources to Terraform, you can use the `terraform import` command. 
@@ -368,5 +375,105 @@ especially if the resources already exist in the cloud provider.
 
 
 
+question:- what is null resource in terraform
+Answer:- A null resource in Terraform is a special type of resource that does not manage any actual
+   infrastructure. Instead, it is used to execute provisioners or run scripts that perform tasks outside of 
+   Terraform's resource management. Null resources can be useful for running custom commands, triggering external processes, or managing dependencies between resources.
+
+question - what is data block in terraform
+Answer:- A Terraform data block is used to retrieve information about an existing resource or external 
+data source. It doesn't create or manage that resource. We commonly use data 
+sources when infrastructure is already created by another team or 
+Terraform project and we need its attributes, such as VNet ID, subnet ID,
+ resource group location, Key Vault ID, or VM image information.
+
+data "azurerm_virtual_network" "existing" {
+  name                = "production-vnet"
+  resource_group_name = "network-rg"
+}
+data "azurerm_subnet" "app" {
+  name                 = "app-subnet"
+  virtual_network_name = data.azurerm_virtual_network.existing.name
+  resource_group_name  = "network-rg"
+}
+resource "azurerm_network_interface" "nic" {
+  name                = "app-nic"
+  location            = "East US"
+  resource_group_name = "network-rg"
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = data.azurerm_subnet.app.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
+
+ question:- what is alias in terraform
+Answer:- In Terraform, an alias is used to create multiple instances of the same provider with different
+   configurations. This is useful when you need to interact with multiple accounts, regions, or environments using the same provider. 
+   By assigning an alias to a provider block, you can reference it in your resources or modules.
+
+provider "azurerm" {
+  features {}
+
+  alias    = "east"
+  location = "East US"
+}
+
+provider "azurerm" {
+  features {}
+
+  alias    = "west"
+  location = "West US"
+}
+
+resource "azurerm_resource_group" "west_rg" {
+  provider = azurerm.west
+
+  name     = "west-rg"
+  location = "West US"
+}
+
+
+
+question- what is terraform workspace and how to use it
+Answer:- Terraform workspaces are a feature that allows you to manage multiple 
+instances of your infrastructure using the same configuration. Each workspace has 
+its own state file, enabling you to create separate environments (e.g., dev, staging, prod) without duplicating your Terraform code.
+To use workspaces, you can follow these steps:
+1. Create a new workspace:
+```bash
+terraform workspace new <workspace_name>
+```      
+
+question - how to use terraform workspace in pipeline
+Answer:- To use Terraform workspaces in a CI/CD pipeline, you can follow these steps:
+1. Set up your pipeline to include Terraform commands.
+2. Use the `terraform workspace select` command to switch to the desired workspace 
+before running any Terraform commands. If the workspace does not exist, you can create
+ it using `terraform workspace new`.   
+
+question - what is terraform target and how to use it
+Answer:- Terraform target is a feature that allows you to apply changes to specific resources
+in your infrastructure without affecting other resources. This can be useful for testing or 
+making incremental changes. 
+terraform apply applies the changes in the overall execution plan for the configuration.
+terraform apply -target=... focuses on a specific resource or module and its relevant dependencies.
+Targeting is intended for exceptional situations, not routine deployment, because it can leave the infrastructure only partially reconciled with the Terraform configuration.
+
+question - replace command in terraform
+Answer:- To replace a resource in Terraform, you can use the `terraform taint` command
+         Modern alternative: -replace
+The terraform taint command is deprecated. The recommended approach is to use the -replace 
+option with terraform plan or terraform apply.
+terraform plan -replace="azurerm_linux_virtual_machine.web"
+
+
+To perform the replacement:
+terraform apply -replace="azurerm_linux_virtual_machine.web"
+
+
+This marks the resource for replacement as part of the operation without requiring a separate taint command.
 
 

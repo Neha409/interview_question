@@ -131,7 +131,8 @@ Used by tools like Terraform, Azure DevOps, GitHub Actions
 
 
 Question how to can migrated on-premises resources to auzre 
-    ans- To migrate on-premises resources to Azure, you can use the Azure Migrate service, which provides a centralized hub for discovering,
+    ans- To migrate on-premises resources to Azure, you can use the Azure Migrate service, 
+    which provides a centralized hub for discovering,
      assessing, and migrating on-premises applications and workloads to Azure. 
     The migration process typically involves the following steps:   
 1. Discovery: Use Azure Migrate to discover and inventory your on-premises resources, including servers, applications, and databases.
@@ -210,5 +211,62 @@ With Point-to-Site VPN, users can establish a secure connection to Azure using a
 This allows users to access Azure resources as if they were on the same local network, providing secure remote access to applications, data, and services hosted in Azure. 
 Point-to-Site VPN is a convenient solution for remote workers, contractors, or anyone who needs to access Azure resources securely from outside the corporate network without the need for a full Site-to-Site VPN connection.    
 
+
+question:- what is PAAS services in azure
+Answer- PaaS (Platform as a Service) in Azure is a cloud computing model that
+    provides a platform and environment for developers to build, deploy, and manage applications without having to worry about the underlying infrastructure.
+    examples of PaaS services in Azure include Azure App Service, Azure SQL Database, Azure Functions, and Azure Logic Apps.
+
+question: what is SAAS services in azure
+Answer- SaaS (Software as a Service) in Azure is a cloud computing model that 
+    delivers software applications over the internet on a subscription basis.
+    Users can access these applications through a web browser without the need for installation or maintenance.
+    examples of SaaS services in Azure include Microsoft 365, Dynamics 365, and Azure DevOps Services.
+
+question - what is IAAS services in azure
+Answer- IaaS (Infrastructure as a Service) in Azure is a cloud computing model that 
+provides virtualized computing resources over the internet. 
+    It allows users to rent virtual machines, storage, and networking resources on-demand, enabling them to build and manage their own IT infrastructure without the need for physical hardware.
+    examples of IaaS services in Azure include Azure Virtual Machines, Azure Virtual Network, and Azure Blob Storage.
+
+Question:- why can't use managed identity in azure devops pipeline
+Answer- Managed Identity cannot be used directly in Azure DevOps pipelines 
+because Managed Identities are designed to be used by Azure resources (like VMs, App Services, etc.) 
+to authenticate to other Azure services. Azure DevOps pipelines run outside of
+ Azure resources, so they do not have a Managed Identity context. 
+ Instead, you can use Service Principals or OpenID Connect (OIDC) for authentication in Azure DevOps pipelines to securely access Azure resources.
+
+
+ Question:- how many type of managed identity in azure
+Answer- There are two types of Managed Identity in Azure:
+1. System-assigned Managed Identity: This type of identity is automatically created and managed by Azure
+    for a specific Azure resource. It is tied to the lifecycle of that resource, meaning that when the resource is deleted, the identity is also deleted. Each resource can have only one system-assigned managed identity.
+
+2. User-assigned Managed Identity: This type of identity is created independently 
+of any Azure resource. It can be assigned to one or more Azure resources, 
+and it persists even if the resources to which it is assigned are deleted. 
+User-assigned managed identities are useful when you need to maintain a consistent 
+identity across multiple resources or when you want to manage the lifecycle of 
+the identity separately from the resources it is associated with.
+
+
+question:- If we have multi region deployment setup which load balancer we can use in azure
+Answer- In a multi-region deployment setup in Azure, you can use Azure Traffic Manager as the 
+load balancer. Azure Traffic Manager is a DNS-based traffic load balancer that enables you to 
+distribute traffic across multiple regions and endpoints. 
+It allows you to route user requests to the most appropriate endpoint based 
+on various routing methods, such as performance, priority, geographic location, 
+or weighted distribution.
+
+
+
+what is azure traffic manager and how it works
+Answer- Azure Traffic Manager is a DNS-based traffic load balancer that enables you to 
+    distribute traffic  across multiple regions and endpoints. It works by directing user requests to 
+    the most appropriate endpoint based on various routing methods, such as performance, priority, geographic location, or weighted distribution.
+    When a user makes a request to your application, the DNS query is resolved by Azure Traffic Manager, which determines the best endpoint to route the request to based on the configured routing method.
+    Azure Traffic Manager continuously monitors the health of your endpoints and automatically reroutes traffic to healthy endpoints
+    in case of failures, ensuring high availability and reliability for your applications.
+        
 
 
